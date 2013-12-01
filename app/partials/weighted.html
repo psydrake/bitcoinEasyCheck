@@ -1,0 +1,21 @@
+<!--<div class="row-fluid" style="margin-left:auto; margin-right:auto">-->
+<div class="container-fluid">
+    <h2 class="muted">Weighted Prices</h2>
+    <h3 class="muted">{{timestamp | date: 'medium'}}</h3>
+
+    <table class="result-table">
+        <tr>
+            <th>Market</th>
+            <th>24 hours</th>
+            <th>7 days</th>
+            <th>30 days</th>
+        </tr>
+        <tr ng-repeat="(key, value) in weightedPrices">
+            <td>{{key}}</td>
+            <td>{{value.24h | currency: currencySymbol(key)}}</td>
+            <td>{{value.7d | currency: currencySymbol(key)}}</td>
+            <td>{{value.30d | currency: currencySymbol(key)}}</td>
+        </tr>
+    </table>
+    <!--<p><a class="btn" href="#">View details &raquo;</a></p>-->
+</div>

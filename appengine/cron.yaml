@@ -1,0 +1,7 @@
+cron:
+- description: pull in data from bitcoincharts
+  url: /tasks/pull-bitcoincharts-data
+  schedule: every 15 minutes
+- description: monday morning mailout
+  url: /mail/bitcoincharts-stats
+  schedule: every 24 hours

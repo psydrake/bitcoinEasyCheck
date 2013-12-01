@@ -1,0 +1,20 @@
+<table class="result-table">
+    <thead>
+        <tr><th colspan="4">Markets</th></tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th>Symbol</th>
+        <th>Average</th>
+        <th>High</th>
+        <th>Low</th>
+    </tr>
+    <tr ng-repeat="market in markets">
+        <td>{{market.symbol}}</td>
+        <!--<td>{{market.currency}}</td>-->
+        <td>{{market.avg}}</td>
+        <td>{{market.high}}</td>
+        <td>{{market.low}}</td>
+    </tr>
+    </tbody>
+</table>

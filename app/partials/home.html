@@ -1,0 +1,42 @@
+<div class="jumbotron">
+    <!--
+    $scope.symbol = 'mtgoxUSD';
+    $scope.latest_trade = 0; // unix time of latest trade
+    $scope.low = 0; // lowest trade during day
+    $scope.high = 0; // highest trade during day
+    $scope.volume = 0; // total trade volume of day in BTC
+    $scope.currency_volume = 0; // total trade volume of day in currency
+    $scope.close = 0; // latest trade
+    $scope.previous_close = 0; // latest trade of previous day
+    -->
+    <!--<h3 class="text-muted">{{symbol}}</h3>-->
+    <h3 class="text-muted">{{latest_trade | date: 'medium'}}</h3>
+
+    <div class="row-fluid">
+        <div class="span4">
+            <div class="lead" style="float:right; padding-right:30px; padding-bottom:20px">
+                high: <span class="priceWayUp">{{high | currency: currencySymbol(currency)}}</span>
+            </div>
+            <div class="lead" style="float:right; padding-right:30px">
+                low: <span class="priceWayDown">{{low | currency: currencySymbol(currency)}}</span>
+            </div>
+            <!--<p><a class="btn" href="#">View details &raquo;</a></p>-->
+        </div>
+        <div class="span4">
+            <h1>{{close | currency: currencySymbol(currency)}}</h1>
+            <!--<p><a class="btn" href="#">View details &raquo;</a></p>-->
+        </div>
+        <div class="span4">
+            <div class="lead" style="float:left">
+                <i class="fa fa-arrow-up fa-3x priceWayUp"></i>
+            </div>
+            <div class="lead">
+                <div>24h avg:</div>
+                <div class="text-muted">{{avg24h | currency: currencySymbol(currency)}}</div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="text-muted">{{symbol}}</h3>
+    <!--<a class="btn btn-large btn-success" href="http://www.mtgox.com/">{{symbol}}</a>-->
+</div>
