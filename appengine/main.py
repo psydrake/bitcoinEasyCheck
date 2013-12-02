@@ -5,7 +5,7 @@ handler.
 """
 
 # import the Bottle framework
-from server.lib.bottle import Bottle
+from server.lib.bottle import Bottle, template
 # TODO: name and list your controllers here so their routes become accessible.
 from server.controllers import RESOURCE_NAME_controller
 
@@ -19,13 +19,24 @@ bottle.mount("/RESOURCE_NAME", RESOURCE_NAME_controller.bottle)
 
 @bottle.route('/')
 def home():
-  """ Return Hello World at application root URL"""
-  return "Hello World"
+  """ Return project name at application root URL"""
+  return "Bitcoin Easy Check"
 
+@bottle.route('/weighted-prices')
+@bottle.route('/weighted-prices/')
+@bottle.route('/weighted-prices/<currency:re:[A-Z][A-Z][A-Z]>')
+def weightedPrices(currency='USD'):
+    return template('currency: {{currency}}', currency=currency)
+    
+@bottle.route('/tasks/pull-bitcoincharts-data')
+def pullBitcoinchartsData():
+    return "data"
+
+@bottle.route('/mail/bitcoincharts-stats')
+def mailBitcoinchartsStats():
+    return "stats"
 
 @bottle.error(404)
 def error_404(error):
   """Return a custom 404 error."""
   return 'Sorry, Nothing at this URL.'
-
-
