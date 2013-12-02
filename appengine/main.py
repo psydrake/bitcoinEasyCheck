@@ -13,7 +13,6 @@ import csv, json, StringIO, urllib2
 from server.controllers import RESOURCE_NAME_controller
 
 WEIGHTED_PRICES_URL = 'http://api.bitcoincharts.com/v1/weighted_prices.json'
-#WEIGHTED_PRICES_URL = 'http://api.icndb.com/jokes/random?firstName=John&lastName=Doe'
 MARKETS_URL = 'http://api.bitcoincharts.com/v1/markets.json'
 TRADES_BY_SYMBOL_URL = 'http://api.bitcoincharts.com/v1/trades.csv?symbol='
 
@@ -131,13 +130,14 @@ def pullTrades(symbol=''):
     
 @bottle.route('/tasks/pull-bitcoincharts-data')
 def pullBitcoinchartsData():
-    pullTrades('mtgoxUSD')
     pullMarkets()
     pullWeightedPrices()
+    pullTrades('mtgoxUSD')
     return "Done"
 
 @bottle.route('/tasks/mail-bitcoincharts-stats')
 def mailBitcoinchartsStats():
+    # TODO: implement this
     return "Done"
 
 @bottle.error(404)
