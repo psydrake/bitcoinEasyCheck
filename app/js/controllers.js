@@ -18,7 +18,8 @@ angular.module('app.controllers', []).
             "symbol": "anxhkCNY", "low": 5156.985544060000}*/
 
         $scope.loadData = function() {
-            bitcoinchartsAPIService.getMarkets([$scope.symbol]).success(function (response) {
+            bitcoinchartsAPIService.getMarkets($scope.symbol).success(function (response) {
+				console.log('homeController.loadData()', response);
                 var market = response[0];
                 $scope.currency = market.currency;
                 $scope.latest_trade = Number(market.latest_trade) * 1000; // unix time of latest trade
@@ -29,13 +30,13 @@ angular.module('app.controllers', []).
                 $scope.close = market.close; // latest trade
                 // previous_close doesn't ever seem to get populated
                 $scope.previous_close = market.previous_close; // latest trade of previous day
-            });
 
-            bitcoinchartsAPIService.getWeightedPrices([$scope.currency]).success(function (response) {
-                //console.log('24h avg. timestamp:', Number(response['timestamp']) * 1000);
-				console.log('response:', response);
-                $scope.avg24h = response[$scope.currency]['24h'];
-                console.log('avg24h:', $scope.avg24h);
+				bitcoinchartsAPIService.getWeightedPrices([$scope.currency]).success(function (response) {
+					//console.log('24h avg. timestamp:', Number(response['timestamp']) * 1000);
+					console.log('response:', response);
+					$scope.avg24h = response[$scope.currency]['24h'];
+					console.log('avg24h:', $scope.avg24h);
+				});
             });
         }
 
@@ -84,6 +85,7 @@ angular.module('app.controllers', []).
         $scope.markets = [];
 
         bitcoinchartsAPIService.getMarkets().success(function (response) {
+			console.log('marketsController.markets:', response);
             $scope.markets = response;
         });
     }).

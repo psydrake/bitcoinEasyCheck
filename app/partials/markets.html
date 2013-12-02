@@ -1,6 +1,6 @@
 <table class="result-table">
     <thead>
-        <tr><th colspan="4">Markets</th></tr>
+        <tr><th colspan="5">Markets</th></tr>
     </thead>
     <tbody>
     <tr>
@@ -8,13 +8,14 @@
         <th>Average</th>
         <th>High</th>
         <th>Low</th>
+        <th>Close</th>
     </tr>
     <tr ng-repeat="market in markets">
         <td>{{market.symbol}}</td>
-        <!--<td>{{market.currency}}</td>-->
         <td>{{market.avg}}</td>
         <td>{{market.high}}</td>
         <td>{{market.low}}</td>
+        <td>{{market.close}}</td>
     </tr>
     </tbody>
 </table>
