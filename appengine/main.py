@@ -76,21 +76,19 @@ def markets(symbol=''):
     print "Returning markets from web request for markets_" + symbol + ", starting with: " + mReturn[0:100]
     return mReturn
 
-def pullMarkets(symbol=''):
+def pullMarkets():
     data = urllib2.urlopen(MARKETS_URL)
 
     dataDict = json.load(data)
-    tmpList = []
-    if (symbol):
-        for x in dataDict:
-            if (x['symbol'] == symbol):
-                tmpList.append(x)
-        dataDict = tmpList
 
-    mReturn = json.dumps(dataDict)
+    for x in dataDict:
+        entry = json.dumps([ x ])
+        memcache.set('markets_' + x['symbol'], entry)
+        print "Stored in memcache for key markets_" + x['symbol'] + ", starting with: " + entry[0:20]
 
-    memcache.set("markets_" + symbol, mReturn)
-    print "Pulled markets and stored in memcache for key markets_" + symbol + ", starting with: " + mReturn[0:100]
+    allMarkets = json.dumps(dataDict)
+    memcache.set("markets_", allMarkets)
+    print "Pulled markets and stored in memcache for key markets_, starting with: " + allMarkets[0:100]
 
 @bottle.route('/api/trades/<symbol:re:[a-z]+[A-Z][A-Z][A-Z]>')
 def trades(symbol=''):
