@@ -31,9 +31,11 @@ angular.module('app.controllers', []).
                 $scope.previous_close = market.previous_close; // latest trade of previous day
             });
 
-            bitcoinchartsAPIService.getWeightedPrices([$scope.symbol]).success(function (response) {
+            bitcoinchartsAPIService.getWeightedPrices([$scope.currency]).success(function (response) {
                 //console.log('24h avg. timestamp:', Number(response['timestamp']) * 1000);
-                console.log(response['USD']['24h']); //[utilService.currencySymbol($scope.currency)]);
+				console.log('response:', response);
+				//response = JSON.parse(response);
+                //console.log(response['USD']['24h']); //[utilService.currencySymbol($scope.currency)]);
                 $scope.avg24h = response[$scope.currency]['24h'];
                 console.log('avg24h:', $scope.avg24h);
             });
@@ -66,6 +68,7 @@ angular.module('app.controllers', []).
 
         $scope.loadData = function() {
             bitcoinchartsAPIService.getWeightedPrices().success(function (response) {
+				response = JSON.parse(response);
                 $scope.timestamp = Number(response['timestamp']) * 1000;
                 //delete response['timestamp'];
                 $scope.weightedPrices = response;
