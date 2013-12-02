@@ -4,6 +4,7 @@ Loads the Bottle framework and mounts controllers.  Also adds a custom error
 handler.
 """
 
+from google.appengine.api import memcache
 # import the Bottle framework
 from server.lib.bottle import Bottle, request, response, template
 import csv, json, StringIO, urllib2
@@ -62,29 +63,52 @@ def weightedPrices(currency=''):
 @bottle.route('/api/markets/<symbol:re:[a-z]+[A-Z][A-Z][A-Z]>')
 def markets(symbol=''):
     response.content_type = 'application/json; charset=utf-8'
+
+    mReturn = memcache.get('markets_' + symbol)
+    if (not mReturn):
+        print "Warning: no data found in memcache for markets_" + symbol
+        mReturn = '{}'
+
+    query = request.query.decode()
+    if (len(query) > 0):
+        mReturn = query['callback'] + '(' + mReturn + ')'
+
+    print "Returning markets from web request for markets_" + symbol + ", starting with: " + mReturn[0:100]
+    return mReturn
+
+def pullMarkets(symbol=''):
     data = urllib2.urlopen(MARKETS_URL)
 
     dataDict = json.load(data)
     tmpList = []
     if (symbol):
         for x in dataDict:
-            #print 'x: ' + str(x['symbol'])
             if (x['symbol'] == symbol):
                 tmpList.append(x)
         dataDict = tmpList
 
     mReturn = json.dumps(dataDict)
-    #mReturn = '[{"volume": 35286.194070110000, "latest_trade": 1385523699, "bid": 969.600000000000, "high": 983.990000000000, "currency": "USD", "currency_volume": 31977540.064671998726, "ask": 969.680000000000, "close": 970.000000000000, "avg": 906.2337525304075111102412858, "symbol": "mtgoxUSD", "low": 825.123010000000}, {"volume": 0, "latest_trade": 1382284470, "bid": 71.999999990000, "high": null, "currency": "EUR", "currency_volume": 0, "ask": null, "close": 119.000000000000, "avg": null, "symbol": "rippleEUR", "low": null}, {"volume": 0.010000000000, "latest_trade": 1385463228, "bid": 395.000000000000, "high": 395.000000000000, "currency": "USD", "currency_volume": 3.950000000000, "ask": null, "close": 395.000000000000, "avg": 395, "symbol": "weexUSD", "low": 395.000000000000}]'
 
-    query = request.query.decode()
-    if (len(query) > 0):
-        mReturn = query['callback'] + '(' + mReturn + ')'
-
-    return mReturn
+    memcache.set("markets_" + symbol, mReturn)
+    print "Pulled markets and stored in memcache for key markets_" + symbol + ", starting with: " + mReturn[0:100]
 
 @bottle.route('/api/trades/<symbol:re:[a-z]+[A-Z][A-Z][A-Z]>')
 def trades(symbol=''):
     response.content_type = 'application/json; charset=utf-8'
+
+    tReturn = memcache.get('trades_' + symbol)
+    if (not tReturn):
+        print "Warning: no data found in memcache for trades_" + symbol
+        tReturn = '[]'
+
+    query = request.query.decode()
+    if (len(query) > 0):
+        tReturn = query['callback'] + '(' + tReturn + ')'
+
+    print "Returning trades from web request for trades_" + symbol + ", starting with: " + tReturn[0:100]
+    return tReturn
+
+def pullTrades(symbol=''):
     data = urllib2.urlopen(TRADES_BY_SYMBOL_URL + symbol).read()
     output = StringIO.StringIO(data)
     cr = csv.reader(output)
@@ -93,25 +117,25 @@ def trades(symbol=''):
     i = 0
     for row in reversed(list(cr)):
         i = i + 1
-        if (i > 10):
+        if (i > 100):
             break
         csvList.append([ int(row[0]), float(row[1]), float(row[2]) ])
 
     tReturn = str(csvList)
 
-    query = request.query.decode()
-    if (len(query) > 0):
-        tReturn = query['callback'] + '(' + tReturn + ')'
+    memcache.set("trades_" + symbol, tReturn)
+    print "Pulled trades and stored in memcache for trades_" + symbol + ", starting with: " + tReturn[0:100]
 
-    return tReturn
     
 @bottle.route('/tasks/pull-bitcoincharts-data')
 def pullBitcoinchartsData():
-    return "data"
+    pullTrades('mtgoxUSD')
+    pullMarkets()
+    return "Done"
 
 @bottle.route('/tasks/mail-bitcoincharts-stats')
 def mailBitcoinchartsStats():
-    return "stats"
+    return "Done"
 
 @bottle.error(404)
 def error_404(error):
