@@ -86,7 +86,7 @@ def markets(symbol=''):
 def pullBitcoinchartsData():
     return "data"
 
-@bottle.route('/mail/bitcoincharts-stats')
+@bottle.route('/tasks/mail-bitcoincharts-stats')
 def mailBitcoinchartsStats():
     return "stats"
 

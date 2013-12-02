@@ -3,5 +3,5 @@ cron:
   url: /tasks/pull-bitcoincharts-data
   schedule: every 15 minutes
 - description: monday morning mailout
-  url: /mail/bitcoincharts-stats
+  url: /tasks/mail-bitcoincharts-stats
   schedule: every 24 hours
