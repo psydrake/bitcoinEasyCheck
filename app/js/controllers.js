@@ -21,22 +21,27 @@ angular.module('app.controllers', []).
             bitcoinchartsAPIService.getMarkets($scope.symbol).success(function (response) {
 				console.log('homeController.loadData()', response);
                 var market = response[0];
-                $scope.currency = market.currency;
-                $scope.latest_trade = Number(market.latest_trade) * 1000; // unix time of latest trade
-                $scope.low = market.low; // lowest trade during day
-                $scope.high = market.high; // highest trade during day
-                $scope.volume = market.volume; // total trade volume of day in BTC
-                $scope.currency_volume = market.currency_volume; // total trade volume of day in currency
-                $scope.close = market.close; // latest trade
-                // previous_close doesn't ever seem to get populated
-                $scope.previous_close = market.previous_close; // latest trade of previous day
+				if (market) {
+					$scope.currency = market.currency;
+					$scope.latest_trade = Number(market.latest_trade) * 1000; // unix time of latest trade
+					$scope.low = market.low; // lowest trade during day
+					$scope.high = market.high; // highest trade during day
+					$scope.volume = market.volume; // total trade volume of day in BTC
+					$scope.currency_volume = market.currency_volume; // total trade volume of day in currency
+					$scope.close = market.close; // latest trade
+					// previous_close doesn't ever seem to get populated
+					$scope.previous_close = market.previous_close; // latest trade of previous day
 
-				bitcoinchartsAPIService.getWeightedPrices([$scope.currency]).success(function (response) {
-					//console.log('24h avg. timestamp:', Number(response['timestamp']) * 1000);
-					console.log('response:', response);
-					$scope.avg24h = response[$scope.currency]['24h'];
-					console.log('avg24h:', $scope.avg24h);
-				});
+					bitcoinchartsAPIService.getWeightedPrices([$scope.currency]).success(function (response) {
+						//console.log('24h avg. timestamp:', Number(response['timestamp']) * 1000);
+						console.log('response:', response);
+						$scope.avg24h = response[$scope.currency]['24h'];
+						console.log('avg24h:', $scope.avg24h);
+					});
+				}
+				else {
+					console.log('Warning: No market data returned from bitcoinchartsAPIService.getMarkets(...)');
+				}
             });
         }
 
