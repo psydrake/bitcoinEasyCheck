@@ -89,14 +89,13 @@ angular.module('app.controllers', []).
             $scope.markets = response;
         });
     }).
-    controller('tradesByMarketController', function($scope, $routeParams, bitcoinchartsAPIService) {
-        $scope.market = $routeParams.id;
-        $scope.tradesByMarket = [[]];
+    controller('tradesBySymbolController', function($scope, $routeParams, bitcoinchartsAPIService) {
+        $scope.symbol = $routeParams.id;
+        $scope.tradesBySymbol = [[]];
 
-        console.log('$scope.market:', $scope.market);
-        bitcoinchartsAPIService.getTradesByMarket($scope.market).success(function (response) {
-            $scope.tradesByMarket = response;
-            //console.log('$scope.tradesByMarket:', $scope.tradesByMarket);
+        console.log('$scope.symbol:', $scope.symbol);
+        bitcoinchartsAPIService.getTradesBySymbol($scope.symbol).success(function (response) {
+            $scope.tradesBySymbol = response;
     });
 });
 

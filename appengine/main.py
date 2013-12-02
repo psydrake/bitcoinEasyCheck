@@ -6,8 +6,7 @@ handler.
 
 # import the Bottle framework
 from server.lib.bottle import Bottle, request, response, template
-import json
-import urllib2
+import csv, json, StringIO, urllib2
 
 # TODO: name and list your controllers here so their routes become accessible.
 from server.controllers import RESOURCE_NAME_controller
@@ -15,6 +14,7 @@ from server.controllers import RESOURCE_NAME_controller
 WEIGHTED_PRICES_URL = 'http://api.bitcoincharts.com/v1/weighted_prices.json'
 #WEIGHTED_PRICES_URL = 'http://api.icndb.com/jokes/random?firstName=John&lastName=Doe'
 MARKETS_URL = 'http://api.bitcoincharts.com/v1/markets.json'
+TRADES_BY_SYMBOL_URL = 'http://api.bitcoincharts.com/v1/trades.csv?symbol='
 
 # Run the Bottle wsgi application. We don't need to call run() since our
 # application is embedded within an App Engine WSGI application server.
@@ -81,6 +81,29 @@ def markets(symbol=''):
         mReturn = query['callback'] + '(' + mReturn + ')'
 
     return mReturn
+
+@bottle.route('/api/trades/<symbol:re:[a-z]+[A-Z][A-Z][A-Z]>')
+def trades(symbol=''):
+    response.content_type = 'application/json; charset=utf-8'
+    data = urllib2.urlopen(TRADES_BY_SYMBOL_URL + symbol).read()
+    output = StringIO.StringIO(data)
+    cr = csv.reader(output)
+
+    csvList = []
+    i = 0
+    for row in reversed(list(cr)):
+        i = i + 1
+        if (i > 10):
+            break
+        csvList.append([ int(row[0]), float(row[1]), float(row[2]) ])
+
+    tReturn = str(csvList)
+
+    query = request.query.decode()
+    if (len(query) > 0):
+        tReturn = query['callback'] + '(' + tReturn + ')'
+
+    return tReturn
     
 @bottle.route('/tasks/pull-bitcoincharts-data')
 def pullBitcoinchartsData():

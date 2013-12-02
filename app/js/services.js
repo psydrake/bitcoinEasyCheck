@@ -142,7 +142,7 @@ angular.module('app.services', []).
             return {
                 success: function(fn) {
 					$http.jsonp(url + '?callback=JSON_CALLBACK').success(function(data, status, headers, config) {
-						console.log('d:', data);
+						console.log('services.getWeightedPrices:', data);
 						fn(data);
 					});
                 }
@@ -159,7 +159,7 @@ angular.module('app.services', []).
             return {
                 success: function(fn) {
 					$http.jsonp(url + '?callback=JSON_CALLBACK').success(function(data, status, headers, config) {
-						console.log('d:', data);
+						console.log('services.getMarkets:', data);
 						fn(data);
 					});
                 }
@@ -189,12 +189,25 @@ angular.module('app.services', []).
             }*/
         }
 
-        bccAPI.getTradesByMarket = function(market) {
-          /*// market is, e.g. mtgoxUSD
-          return $http({
-            method: 'JSONP',
-            url: 'http://api.bitcoincharts.com/v1/trades.csv?symbol=' + market
-          });*/
+        bccAPI.getTradesBySymbol = function(symbol) {
+			var url = 'https://bitcoineasycheck.appspot.com/api/trades/' + symbol;
+
+            return {
+                success: function(fn) {
+					$http.jsonp(url + '?callback=JSON_CALLBACK').success(function(data, status, headers, config) {
+						console.log('services.getTradesBySymbol:', data);
+						var theData = [];
+						data.forEach(function(entry) {
+							//console.log(entry);
+							theData.push([ Number(entry[0]) * 1000, entry[1], entry[2] ]);
+						});
+						//console.log(theData);
+						fn(theData);
+					});
+                }
+            };
+
+			/*
             var tradeArr = [];
             if (market === 'mtgoxUSD') {
                 tradeArr = utilService.csvToArray(mtgoxTrades);
@@ -210,7 +223,7 @@ angular.module('app.services', []).
                     fn(tradeArr);
                 }
 
-            }
+            }*/
         }
 
         return bccAPI;
