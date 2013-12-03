@@ -132,3 +132,11 @@ body {
 .priceUnknown {
     color: yellow;
 }
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
