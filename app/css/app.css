@@ -110,27 +110,20 @@ body {
 }
 
 /* Price colors indicating up, down, or steady */
-.priceWayUp {
+.priceUp {
     color: green;
 }
 
-.priceUp {
-    color: greenyellow;
-}
-
-.priceSteady {
+.priceSame {
     color: dodgerblue;
 }
 
 .priceDown {
-    color: orangered;
-}
-.priceWayDown {
     color: red;
 }
 
 .priceUnknown {
-    color: yellow;
+    color: gold;
 }
 
 .left {
@@ -143,4 +136,15 @@ body {
 
 .currency {
 	text-align: right;
+}
+
+.highPrice {
+	float:right; 
+	padding-right:30px; 
+	padding-bottom:20px;
+}
+
+.lowPrice {
+	float:right;
+	padding-right:30px;
 }

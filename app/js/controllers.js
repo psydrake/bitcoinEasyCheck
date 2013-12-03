@@ -39,6 +39,20 @@ angular.module('app.controllers', []).
 						else {
 							utilService.log('Warning: No weighted prices data returned from bitcoinchartsAPIService.getWeightedPrices(' + $scope.currency + ')', response);	
 						}
+
+						// set css class for closing price
+						if (!$scope.close || !$scope.avg24h) {
+							$scope.closePriceClass = 'priceUnknown';
+						}
+						else if ($scope.close > $scope.avg24h) {
+							$scope.closePriceClass = 'priceUp';
+						}
+						else if ($scope.close === $scope.avg24h) {
+							$scope.closePriceClass = 'priceSame';
+						}
+						else if ($scope.close < $scope.avg24h) {
+							$scope.closePriceClass = 'priceDown';
+						}
 					});
 				}
 				else {
