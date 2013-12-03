@@ -2,6 +2,7 @@ cron:
 - description: pull in data from bitcoincharts
   url: /tasks/pull-bitcoincharts-data
   schedule: every 15 minutes
-- description: daily stats mailout
-  url: /tasks/mail-bitcoincharts-stats
-  schedule: every day 00:01
+
+#- description: daily stats mailout
+#  url: /tasks/mail-bitcoincharts-stats
+#  schedule: every day 00:01

@@ -20,8 +20,8 @@ angular.module('app.controllers', []).
         $scope.loadData = function() {
             bitcoinchartsAPIService.getMarkets($scope.symbol).success(function (response) {
 				//console.log('homeController.loadData()', response);
-                var market = response[0];
-				if (market) {
+				if (response && response[0]) {
+	                var market = response[0];
 					$scope.currency = market.currency;
 					$scope.latest_trade = Number(market.latest_trade) * 1000; // unix time of latest trade
 					$scope.low = market.low; // lowest trade during day
@@ -33,12 +33,16 @@ angular.module('app.controllers', []).
 					$scope.previous_close = market.previous_close; // latest trade of previous day
 
 					bitcoinchartsAPIService.getWeightedPrices([$scope.currency]).success(function (response) {
-						//console.log('response:', response);
-						$scope.avg24h = response[$scope.currency]['24h'];
+						if (response && response[$scope.currency]) {
+							$scope.avg24h = response[$scope.currency]['24h'];
+						}
+						else {
+							utilService.log('Warning: No weighted prices data returned from bitcoinchartsAPIService.getWeightedPrices(' + $scope.currency + ')', response);	
+						}
 					});
 				}
 				else {
-					console.log('Warning: No market data returned from bitcoinchartsAPIService.getMarkets(...)');
+					utilService.log('Warning: No market data returned from bitcoinchartsAPIService.getMarkets(' + $scope.symbol + ')', response);
 				}
             });
         }
@@ -70,8 +74,13 @@ angular.module('app.controllers', []).
 
         $scope.loadData = function() {
             bitcoinchartsAPIService.getWeightedPrices().success(function (response) {
-                $scope.timestamp = Number(response['timestamp']) * 1000;
-                $scope.weightedPrices = response;
+				if (response && response.timestamp) {
+	                $scope.timestamp = Number(response['timestamp']) * 1000;
+	                $scope.weightedPrices = response;
+				}
+				else {
+					utilService.log('Warning: No weighted prices data returned from bitcoinchartsAPIService.getWeightedPrices()', response);
+				}
             });
         }
 
@@ -83,13 +92,18 @@ angular.module('app.controllers', []).
 
         $scope.loadData();
     }).
-    controller('marketsController', function($scope, bitcoinchartsAPIService) {
+    controller('marketsController', function($scope, bitcoinchartsAPIService, utilService) {
         $scope.markets = [];
 
 		$scope.loadData = function() {
 			bitcoinchartsAPIService.getMarkets().success(function (response) {
-				//console.log('marketsController.markets:', response);
-				$scope.markets = response;
+				if (response && response.length > 0) {
+					//console.log('marketsController.markets:', response);
+					$scope.markets = response;
+				}
+				else {
+					utilService.log('Warning: No markets data returned from bitcoinchartsAPIService.getMarkets()', response);
+				}
 			});
 		}
 
@@ -101,14 +115,19 @@ angular.module('app.controllers', []).
 
         $scope.loadData();
     }).
-    controller('tradesBySymbolController', function($scope, $routeParams, bitcoinchartsAPIService) {
+    controller('tradesBySymbolController', function($scope, $routeParams, bitcoinchartsAPIService, utilService) {
         $scope.symbol = $routeParams.id;
         $scope.tradesBySymbol = [[]];
         //console.log('$scope.symbol:', $scope.symbol);
 
 		$scope.loadData = function() {
 	        bitcoinchartsAPIService.getTradesBySymbol($scope.symbol).success(function (response) {
-	            $scope.tradesBySymbol = response;
+				if (response && response.length > 0) {
+		            $scope.tradesBySymbol = response;
+				}
+				else {
+					utilService.log('Warning: No trade data returned from bitcoinchartsAPIService.getTradesBySymbol(' + $scope.symbol + ')', response);					
+				}
 			});
 		}
 

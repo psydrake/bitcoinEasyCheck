@@ -132,7 +132,7 @@ def pullTrades(symbol=''):
 def pullBitcoinchartsData():
     pullMarkets()
     pullWeightedPrices()
-    pullTrades('mtgoxUSD')
+    #pullTrades('mtgoxUSD')
     return "Done"
 
 @bottle.route('/tasks/mail-bitcoincharts-stats')
