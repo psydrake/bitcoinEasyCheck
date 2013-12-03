@@ -68,7 +68,6 @@ angular.module('app.controllers', []).
         };*/
 
         $scope.currencySymbol = function(currency) {
-            //console.log('weightedController.currencySymbol(' + currency + ')');
             return utilService.currencySymbol(currency);
         }
 
@@ -95,11 +94,18 @@ angular.module('app.controllers', []).
     controller('marketsController', function($scope, bitcoinchartsAPIService, utilService) {
         $scope.markets = [];
 
+        $scope.currencySymbol = function(currency) {
+            return utilService.currencySymbol(currency);
+        }
+
 		$scope.loadData = function() {
 			bitcoinchartsAPIService.getMarkets().success(function (response) {
 				if (response && response.length > 0) {
 					//console.log('marketsController.markets:', response);
 					$scope.markets = response;
+					$scope.markets.forEach(function(entry) {
+						entry.latest_trade = Number(entry.latest_trade) * 1000;
+					});
 				}
 				else {
 					utilService.log('Warning: No markets data returned from bitcoinchartsAPIService.getMarkets()', response);
