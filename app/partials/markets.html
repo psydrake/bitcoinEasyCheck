@@ -19,7 +19,7 @@
         <td class="currency">{{market.high | currency: currencySymbol(market.currency)}}</td>
         <td class="currency">{{market.low | currency: currencySymbol(market.currency)}}</td>
         <td class="currency">{{market.close | currency: currencySymbol(market.currency)}}</td>
-        <td>{{market.volume}}</td>
+        <td>{{market.volume | number}}</td>
       </tr>
     </tbody>
   </table>

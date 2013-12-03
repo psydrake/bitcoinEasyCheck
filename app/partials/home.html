@@ -20,20 +20,19 @@
             <div class="lead lowPrice">
                 low: <span class="priceDown">{{low | currency: currencySymbol(currency)}}</span>
             </div>
-            <!--<p><a class="btn" href="#">View details &raquo;</a></p>-->
         </div>
         <div class="span4">
             <h1><span class="{{closePriceClass}}">{{close | currency: currencySymbol(currency)}}</span></h1>
-            <!--<p><a class="btn" href="#">View details &raquo;</a></p>-->
         </div>
         <div class="span4">
             <div class="lead">
                 <div>24h avg:</div>
-                <div class="text-muted">{{avg24h | currency: currencySymbol(currency)}}</div>
+				<div class="text-muted">{{avg24h | currency: currencySymbol(currency)}}</div>
             </div>
         </div>
     </div>
 
     <h3 class="text-muted">{{symbol}}</h3>
+    <div class="small"><i class="fa fa-bitcoin"></i> volume: <span class="text-muted">{{volume | number}}</span></div>
     <!--<a class="btn btn-large btn-success" href="http://www.mtgox.com/">{{symbol}}</a>-->
 </div>
