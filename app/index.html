@@ -17,7 +17,7 @@
 <body ng-app="app">
 <div class="container">
       <div class="masthead">
-          <div class="navbar" bs-navbar>
+			<div class="navbar" bs-navbar>
               <div class="navbar-inner">
                   <div class="container">
                       <ul class="nav">
@@ -27,14 +27,20 @@
                           <li data-match-route="/weighted"><a href="#/weighted">Weighted</a></li>
                           <li data-match-route="/markets"><a href="#/markets">Markets</a></li>
                           <!--<li data-match-route="/trades/mtgoxUSD"><a href="#/trades/mtgoxUSD">mtgoxUSD</a></li>-->
-                          <li data-match-route="/settings"><a href="#/settings"><i class="fa fa-2x fa-wrench"></i></a></li>
+                          <!--<li data-match-route="/settings"><a href="#/settings"><i class="fa fa-2x fa-wrench"></i></a></li>-->
                           <li><a href="javascript:void(0)" ng-click="loadData()"><i class="fa fa-2x fa-refresh"></i></a></li>
                       </ul>
                   </div>
               </div>
-          </div>
-          <ng-view></ng-view>
-          <span class="muted"><i class="fa fa-bitcoin"></i> Easy Check</span> caches data from the <a href="http://bitcoincharts.com/" target="_blank">Bitcoincharts</a> API. Data may lag up to 15 minutes behind real time.
+			</div>
+
+			<ng-view></ng-view>
+
+			<div class="footer">
+				<p>
+		          <span class="muted"><i class="fa fa-bitcoin"></i> Easy Check</span> caches data from the <a href="http://bitcoincharts.com/" target="_blank">Bitcoincharts</a> API. Data may lag up to 15 minutes behind real time.
+				</p>
+			</div>
       </div>
 
 </div>
