@@ -7,7 +7,7 @@ handler.
 from google.appengine.api import memcache
 # import the Bottle framework
 from server.lib.bottle import Bottle, request, response, template
-import csv, json, StringIO, urllib2
+import csv, json, logging, StringIO, urllib2
 
 # TODO: name and list your controllers here so their routes become accessible.
 from server.controllers import RESOURCE_NAME_controller
@@ -37,7 +37,7 @@ def weightedPrices(currency=''):
 
     wpReturn = memcache.get('wp_' + currency)
     if (not wpReturn):
-        print "Warning: no data found in memcache for wp_" + currency
+        logging.warn("No data found in memcache for wp_" + currency)
         wpReturn = '{}'
 
     query = request.query.decode()
@@ -55,12 +55,12 @@ def pullWeightedPrices():
         tmpDict[key] = dataDict[key]
         entry = json.dumps(tmpDict)
         memcache.set('wp_' + key, entry)
-        print "Stored in memcache for key wp_" + key + ", starting with: " + entry[0:20]
+        logging.info("Stored in memcache for key wp_" + key + ", starting with: " + entry[0:20])
 
     allWeightedPrices = json.dumps(dataDict)
 
     memcache.set("wp_", allWeightedPrices)
-    print "Pulled weighted prices and stored in memcache for key wp_, starting with: " + allWeightedPrices[0:100]
+    logging.info("Pulled weighted prices and stored in memcache for key wp_, starting with: " + allWeightedPrices[0:100])
 
 @bottle.route('/api/markets')
 @bottle.route('/api/markets/')
@@ -70,14 +70,14 @@ def markets(symbol=''):
 
     mReturn = memcache.get('markets_' + symbol)
     if (not mReturn):
-        print "Warning: no data found in memcache for markets_" + symbol
+        logging.warn("No data found in memcache for markets_" + symbol)
         mReturn = '{}'
 
     query = request.query.decode()
     if (len(query) > 0):
         mReturn = query['callback'] + '(' + mReturn + ')'
 
-    print "Returning markets from web request for markets_" + symbol + ", starting with: " + mReturn[0:100]
+    logging.info("Returning markets from web request for markets_" + symbol + ", starting with: " + mReturn[0:100])
     return mReturn
 
 def pullMarkets():
@@ -88,11 +88,11 @@ def pullMarkets():
     for x in dataDict:
         entry = json.dumps([ x ])
         memcache.set('markets_' + x['symbol'], entry)
-        print "Stored in memcache for key markets_" + x['symbol'] + ", starting with: " + entry[0:20]
+        logging.info("Stored in memcache for key markets_" + x['symbol'] + ", starting with: " + entry[0:20])
 
     allMarkets = json.dumps(dataDict)
     memcache.set("markets_", allMarkets)
-    print "Pulled markets and stored in memcache for key markets_, starting with: " + allMarkets[0:100]
+    logging.info("Pulled markets and stored in memcache for key markets_, starting with: " + allMarkets[0:100])
 
 @bottle.route('/api/trades/<symbol:re:[a-z]+[A-Z][A-Z][A-Z]>')
 def trades(symbol=''):
@@ -100,14 +100,14 @@ def trades(symbol=''):
 
     tReturn = memcache.get('trades_' + symbol)
     if (not tReturn):
-        print "Warning: no data found in memcache for trades_" + symbol
+        logging.warn("No data found in memcache for trades_" + symbol)
         tReturn = '[]'
 
     query = request.query.decode()
     if (len(query) > 0):
         tReturn = query['callback'] + '(' + tReturn + ')'
 
-    print "Returning trades from web request for trades_" + symbol + ", starting with: " + tReturn[0:100]
+    logging.info("Returning trades from web request for trades_" + symbol + ", starting with: " + tReturn[0:100])
     return tReturn
 
 def pullTrades(symbol=''):
@@ -126,7 +126,7 @@ def pullTrades(symbol=''):
     tReturn = str(csvList)
 
     memcache.set("trades_" + symbol, tReturn)
-    print "Pulled trades and stored in memcache for trades_" + symbol + ", starting with: " + tReturn[0:100]
+    logging.info("Pulled trades and stored in memcache for trades_" + symbol + ", starting with: " + tReturn[0:100])
     
 @bottle.route('/tasks/pull-bitcoincharts-data')
 def pullBitcoinchartsData():
