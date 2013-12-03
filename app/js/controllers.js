@@ -84,24 +84,44 @@ angular.module('app.controllers', []).
         });
 
         $scope.loadData();
-
     }).
     controller('marketsController', function($scope, bitcoinchartsAPIService) {
         $scope.markets = [];
 
-        bitcoinchartsAPIService.getMarkets().success(function (response) {
-			console.log('marketsController.markets:', response);
-            $scope.markets = response;
+		$scope.loadData = function() {
+			bitcoinchartsAPIService.getMarkets().success(function (response) {
+				console.log('marketsController.markets:', response);
+				$scope.markets = response;
+			});
+		}
+
+        $scope.$on('bitcoinchartsAPIService.refresh', function(event, path) {
+            if (path === '/markets') {
+                $scope.loadData();
+            }
         });
+
+        $scope.loadData();
     }).
     controller('tradesBySymbolController', function($scope, $routeParams, bitcoinchartsAPIService) {
         $scope.symbol = $routeParams.id;
         $scope.tradesBySymbol = [[]];
-
         console.log('$scope.symbol:', $scope.symbol);
-        bitcoinchartsAPIService.getTradesBySymbol($scope.symbol).success(function (response) {
-            $scope.tradesBySymbol = response;
+
+		$scope.loadData = function() {
+	        bitcoinchartsAPIService.getTradesBySymbol($scope.symbol).success(function (response) {
+	            $scope.tradesBySymbol = response;
+			});
+		}
+
+        $scope.$on('bitcoinchartsAPIService.refresh', function(event, path) {
+            if (path && path.substring(0,7) === '/trades') {
+                $scope.loadData();
+            }
+        });
+
+        $scope.loadData();
     });
-});
+
 
 
