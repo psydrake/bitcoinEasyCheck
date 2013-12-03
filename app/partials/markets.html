@@ -15,10 +15,10 @@
       <tr ng-repeat="market in markets">
         <td>{{market.symbol}}</td>
 		<td>{{market.latest_trade | date: 'medium'}}</td>
-        <td>{{market.avg | currency: currencySymbol(market.currency)}}</td>
-        <td>{{market.high | currency: currencySymbol(market.currency)}}</td>
-        <td>{{market.low | currency: currencySymbol(market.currency)}}</td>
-        <td>{{market.close | currency: currencySymbol(market.currency)}}</td>
+        <td class="currency">{{market.avg | currency: currencySymbol(market.currency)}}</td>
+        <td class="currency">{{market.high | currency: currencySymbol(market.currency)}}</td>
+        <td class="currency">{{market.low | currency: currencySymbol(market.currency)}}</td>
+        <td class="currency">{{market.close | currency: currencySymbol(market.currency)}}</td>
         <td>{{market.volume}}</td>
       </tr>
     </tbody>
