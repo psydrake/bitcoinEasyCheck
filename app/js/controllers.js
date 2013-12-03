@@ -19,7 +19,7 @@ angular.module('app.controllers', []).
 
         $scope.loadData = function() {
             bitcoinchartsAPIService.getMarkets($scope.symbol).success(function (response) {
-				console.log('homeController.loadData()', response);
+				//console.log('homeController.loadData()', response);
                 var market = response[0];
 				if (market) {
 					$scope.currency = market.currency;
@@ -33,10 +33,8 @@ angular.module('app.controllers', []).
 					$scope.previous_close = market.previous_close; // latest trade of previous day
 
 					bitcoinchartsAPIService.getWeightedPrices([$scope.currency]).success(function (response) {
-						//console.log('24h avg. timestamp:', Number(response['timestamp']) * 1000);
-						console.log('response:', response);
+						//console.log('response:', response);
 						$scope.avg24h = response[$scope.currency]['24h'];
-						console.log('avg24h:', $scope.avg24h);
 					});
 				}
 				else {
@@ -90,7 +88,7 @@ angular.module('app.controllers', []).
 
 		$scope.loadData = function() {
 			bitcoinchartsAPIService.getMarkets().success(function (response) {
-				console.log('marketsController.markets:', response);
+				//console.log('marketsController.markets:', response);
 				$scope.markets = response;
 			});
 		}
@@ -106,7 +104,7 @@ angular.module('app.controllers', []).
     controller('tradesBySymbolController', function($scope, $routeParams, bitcoinchartsAPIService) {
         $scope.symbol = $routeParams.id;
         $scope.tradesBySymbol = [[]];
-        console.log('$scope.symbol:', $scope.symbol);
+        //console.log('$scope.symbol:', $scope.symbol);
 
 		$scope.loadData = function() {
 	        bitcoinchartsAPIService.getTradesBySymbol($scope.symbol).success(function (response) {

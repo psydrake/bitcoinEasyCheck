@@ -107,24 +107,26 @@ angular.module('app.services', []).
     factory('bitcoinchartsAPIService', function($http, utilService) {
         var bccAPI = {};
 
-        // see: http://bitcoincharts.com/about/markets-api/
-
+		// For bitcoincharts API documentation, see: http://bitcoincharts.com/about/markets-api/
+		//
         // Bitcoincharts offers weighted prices for several currencies.
         // You can use this to price goods and services in Bitcoins.
         // This will yield much lower fluctuations than using a single market's latest price.
         // http://api.bitcoincharts.com/v1/weighted_prices.json
+		//
+		// {"NZD": {"24h": "1318.71", "7d": "1232.72", "30d": "714.22"}, "GBP": {"24h": "649.61", "7d": "670.24", "30d": "382.66"}, ...}
 
         // You can access general market data. This will return an array with elements for each market.
         // http://api.bitcoincharts.com/v1/markets.json
-        /*var markets = [{"volume": 4.855583920000, "latest_trade": 1385510680, "bid": 5200.000000000000, "high": 5468.253968250000, "currency": "CNY",
-            "currency_volume": 25837.585663292542, "ask": 5468.253970000000, "close": 5468.253968250000, "avg": 5321.210813980235357563339159,
-            "symbol": "anxhkCNY", "low": 5156.985544060000},
-            {"volume": 68.053228390000, "latest_trade": 1385511483, "bid": 6553.000000000000, "high": 7045.000000000000, "currency": "HKD", "currency_volume": 458612.676115478723, "ask": 6890.000000000000, "close": 6501.000000000000, "avg": 6739.028947859129229475192573, "symbol": "anxhkHKD", "low": 6452.000000000000},
-            {"volume": 9.597594480000, "latest_trade": 1385510860, "bid": 840.128210000000, "high": 881.168831160000, "currency": "USD", "currency_volume": 8184.719658225408, "ask": 894.805190000000,
-		*/
+		//
+        // [{"volume": 4.855583920000, "latest_trade": 1385510680, "bid": 5200.000000000000, "high": 5468.253968250000, "currency": "CNY",
+        //    "currency_volume": 25837.585663292542, "ask": 5468.253970000000, "close": 5468.253968250000, "avg": 5321.210813980235357563339159,
+        //    "symbol": "anxhkCNY", "low": 5156.985544060000}, ...]
+
         // Trade data is available as CSV, delayed by approx. 15 minutes. It will return the 2000 most recent trades.
         // http://api.bitcoincharts.com/v1/trades.csv?symbol=mtgoxUSD
-        //var mtgoxTrades = "1385076902,771.461540000000,0.011109990000\n1385076903,771.461540000000,0.011109990000\n1385076903,771.463190000000,0.299999990000\n.."
+		//
+        // "1385076902,771.461540000000,0.011109990000\n1385076903,771.461540000000,0.011109990000\n1385076903,771.463190000000,0.299999990000\n.."
 
         bccAPI.getWeightedPrices = function(currency) {
 			var url = 'https://bitcoineasycheck.appspot.com/api/weighted-prices/';
@@ -136,7 +138,7 @@ angular.module('app.services', []).
             return {
                 success: function(fn) {
 					$http.jsonp(url + '?callback=JSON_CALLBACK').success(function(data, status, headers, config) {
-						console.log('services.getWeightedPrices:', data);
+						//console.log('services.getWeightedPrices:', data);
 						fn(data);
 					});
                 }
@@ -153,34 +155,11 @@ angular.module('app.services', []).
             return {
                 success: function(fn) {
 					$http.jsonp(url + '?callback=JSON_CALLBACK').success(function(data, status, headers, config) {
-						console.log('services.getMarkets:', data);
+						//console.log('services.getMarkets:', data);
 						fn(data);
 					});
                 }
             };
-
-			/*
-            var m = [];
-            if (symbols) {
-                for (var i = 0; i < symbols.length; i++) {
-                    for (var j = 0; j < markets.length; j++) {
-                        if (symbols[i] === markets[j].symbol) {
-                            m.push(markets[j]);
-                            break;
-                        }
-                    }
-                }
-            }
-            else { // no symbols passed in, default to all markets
-                m = markets;
-            }
-            console.log('getMarkets(). markets:', m);
-
-            return {
-                success: function(fn) {
-                    fn(m);
-                }
-            }*/
         }
 
         bccAPI.getTradesBySymbol = function(symbol) {
@@ -189,7 +168,7 @@ angular.module('app.services', []).
             return {
                 success: function(fn) {
 					$http.jsonp(url + '?callback=JSON_CALLBACK').success(function(data, status, headers, config) {
-						console.log('services.getTradesBySymbol:', data);
+						//console.log('services.getTradesBySymbol:', data);
 						var theData = [];
 						data.forEach(function(entry) {
 							//console.log(entry);
@@ -200,24 +179,6 @@ angular.module('app.services', []).
 					});
                 }
             };
-
-			/*
-            var tradeArr = [];
-            if (market === 'mtgoxUSD') {
-                tradeArr = utilService.csvToArray(mtgoxTrades);
-                tradeArr.splice(1000, 19000); // remove most of the rows
-                console.log('trade rows:', tradeArr.length);
-                for (var i = 0; i < tradeArr.length; i++) {
-                    tradeArr[i][0] =  Number(tradeArr[i][0]) * 1000;
-                }
-            }
-
-            return {
-                success: function(fn) {
-                    fn(tradeArr);
-                }
-
-            }*/
         }
 
         return bccAPI;
