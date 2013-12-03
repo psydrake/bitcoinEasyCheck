@@ -76,6 +76,7 @@ angular.module('app.controllers', []).
 				if (response && response.timestamp) {
 	                $scope.timestamp = Number(response['timestamp']) * 1000;
 	                $scope.weightedPrices = response;
+					delete $scope.weightedPrices['timestamp'];
 				}
 				else {
 					utilService.log('Warning: No weighted prices data returned from bitcoinchartsAPIService.getWeightedPrices()', response);
