@@ -16,9 +16,25 @@ var app = angular.module('app', [
 			otherwise({redirectTo: "/home"});
 }]);
 
-app.run(function($rootScope, $location) {
+app.run(function($rootScope, $location, $timeout, utilService) {
+	$rootScope.loadingClass = '';
+
+    $rootScope.getClass = function(path) {
+        utilService.log('path: '+ path + ', $location.path(): ' + $location.path());
+        if ($location.path().substr(0, path.length) === path) {
+            return "active";
+        }
+        else {
+            return "";
+        }
+    }
+
     $rootScope.loadData = function() {
-        console.log('loadData!', $location.path());
+		$rootScope.loadingClass = 'fa-spin';
+        utilService.log('loadData! ' + $location.path());
         $rootScope.$broadcast('bitcoinchartsAPIService.refresh', $location.path());
+		$timeout(function() {
+				$rootScope.loadingClass = '';
+			}, 1000);
     }
 });
