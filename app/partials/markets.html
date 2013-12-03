@@ -10,6 +10,7 @@
         <th>High</th>
         <th>Low</th>
         <th>Close</th>
+		<th><i class="fa fa-bitcoin"></i> Volume</th>
       </tr>
       <tr ng-repeat="market in markets">
         <td>{{market.symbol}}</td>
@@ -18,6 +19,7 @@
         <td>{{market.high | currency: currencySymbol(market.currency)}}</td>
         <td>{{market.low | currency: currencySymbol(market.currency)}}</td>
         <td>{{market.close | currency: currencySymbol(market.currency)}}</td>
+        <td>{{market.volume}}</td>
       </tr>
     </tbody>
   </table>
