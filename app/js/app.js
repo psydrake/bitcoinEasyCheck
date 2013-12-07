@@ -34,7 +34,13 @@ app.run(function($rootScope, $location, $timeout, utilService) {
         utilService.log('loadData! ' + $location.path());
         $rootScope.$broadcast('bitcoinchartsAPIService.refresh', $location.path());
 		$timeout(function() {
-				$rootScope.loadingClass = '';
+				$rootScope.loadingClass = ''; // stop spinner
 			}, 1000);
     }
+
+	// run on load
+	$timeout(function() {
+		trackPage(); // track in google analytics
+	}, 1000);
+
 });
