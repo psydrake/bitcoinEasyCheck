@@ -6,10 +6,10 @@
   "icons": { "16": "bitcoin_easy_check_16x16.png", "128": "bitcoin_easy_check_128x128.png" },
   "app": {
     "urls": [
-	"http://dznxs8nwc537r.cloudfront.net/main.html"
+	"http://d26tzgk0gx1hwh.cloudfront.net/main.html"
     ],
     "launch": {
-	"web_url": "http://dznxs8nwc537r.cloudfront.net/main.html"
+	"web_url": "http://d26tzgk0gx1hwh.cloudfront.net/main.html"
     }
   }
 }
