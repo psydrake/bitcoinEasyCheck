@@ -13,6 +13,7 @@ var app = angular.module('app', [
             when("/weighted", {templateUrl: "partials/weighted.html", controller: "weightedController"}).
             when("/markets", {templateUrl: "partials/markets.html", controller: "marketsController"}).
             when("/trades/:id", {templateUrl: "partials/tradesBySymbol.html", controller: "tradesBySymbolController"}).
+            when("/about", {templateUrl: "partials/about.html", controller: "aboutController"}).
 			otherwise({redirectTo: "/home"});
 }]);
 

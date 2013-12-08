@@ -159,6 +159,8 @@ angular.module('app.controllers', []).
         });
 
         $scope.loadData();
+    }).
+    controller('aboutController', function($scope, utilService) {
     });
 
 
