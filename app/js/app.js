@@ -41,7 +41,6 @@ app.run(function($rootScope, $location, $timeout, utilService) {
 
 	// run on load
 	$timeout(function() {
-		trackPage(); // track in google analytics
 		doCustomActions(); // perform platform-specific javascript
 	}, 1000);
 
