@@ -1,6 +1,6 @@
 {
   "name": "Bitcoin Easy Check",
-  "description": "Check the market price of bitcoin. Simple. Easy. Backend caches data from the bitcoincharts.com API and may lag up to 15 minutes behind real time.",
+  "description": "Check the market price of bitcoin. Simple and easy. Backend caches data from the bitcoincharts.com API.",
   "version": "1.0",
   "manifest_version": 2,
   "icons": { "16": "bitcoin_easy_check_16x16.png", "128": "bitcoin_easy_check_128x128.png" },
