@@ -112,6 +112,17 @@ angular.module('app.services', []).
             }
         }
     }).
+	factory('settingsService', function($cookies) {
+		return {
+			getPreferredMarket: function() {
+				return $cookies.preferredMarket ? $cookies.preferredMarket : 'mtgoxUSD';
+			},
+
+			setPreferredMarket: function(preferredMarket) {
+				$cookies.preferredMarket = preferredMarket;
+			}
+		}
+	}).
     factory('bitcoinchartsAPIService', function($http, utilService) {
         var bccAPI = {};
 

@@ -5,6 +5,7 @@ var app = angular.module('app', [
         'app.controllers',
         'app.services',
         'ngRoute',
+		'ngCookies',
         'ui.bootstrap'
     ]).
 	config(['$routeProvider', function($routeProvider) {
@@ -18,11 +19,11 @@ var app = angular.module('app', [
 			otherwise({redirectTo: "/home"});
 }]);
 
-app.run(function($rootScope, $location, $timeout, utilService) {
+app.run(function($rootScope, $location, $timeout, $log) {
 	$rootScope.loadingClass = '';
 
     $rootScope.getClass = function(path) {
-        utilService.log('path: '+ path + ', $location.path(): ' + $location.path());
+		$log.debug('path: '+ path + ', $location.path(): ' + $location.path());
         if ($location.path().substr(0, path.length) === path) {
             return "active";
         }
@@ -33,7 +34,7 @@ app.run(function($rootScope, $location, $timeout, utilService) {
 
     $rootScope.loadData = function() {
 		$rootScope.loadingClass = 'fa-spin';
-        utilService.log('loadData! ' + $location.path());
+        $log.info('loadData! ' + $location.path());
         $rootScope.$broadcast('bitcoinchartsAPIService.refresh', $location.path());
 		$timeout(function() {
 				$rootScope.loadingClass = ''; // stop spinner

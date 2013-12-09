@@ -1,14 +1,16 @@
-<div class="jumbotron">
-	<h3>Settings</h3>
+<div class="container-fluid">
+	<h3 class="muted">Settings</h3>
 
-	<div class="row-fluid">
-      <form name="settingsForm" ng-controller="settingsController">
-		<input type="radio" ng-model="color" value="red">  Red <br/>
-		<input type="radio" ng-model="color" value="green"> Green <br/>
-		<input type="radio" ng-model="color" value="blue"> Blue <br/>
-		<tt>color = {{color}}</tt><br/>
-      </form>
-	</div>
+	<form name="settingsForm">
+	<table class="table table-settings">
+	    <tbody>
+			<tr>
+				<td>Preferred Market</td>
+				<td><select ng-model="preferredMarket" ng-options="symbol for symbol in symbols"></select></td>
+			</tr>
+	    </tbody>
+	</table>
+	</form>
 </div>
 
 <script type="text/javascript">

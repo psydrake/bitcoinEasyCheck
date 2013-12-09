@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('app.controllers', []).
-    controller('homeController', function($scope, bitcoinchartsAPIService, utilService) {
-        $scope.symbol = 'mtgoxUSD';
+    controller('homeController', function($scope, $log, bitcoinchartsAPIService, utilService, settingsService) {
+        $scope.symbol = settingsService.getPreferredMarket();
         $scope.currency = null;
         $scope.latest_trade = 0; // unix time of latest trade
         $scope.low = 0; // lowest trade during day
@@ -17,9 +17,12 @@ angular.module('app.controllers', []).
             "currency_volume": 25837.585663292542, "ask": 5468.253970000000, "close": 5468.253968250000, "avg": 5321.210813980235357563339159,
             "symbol": "anxhkCNY", "low": 5156.985544060000}*/
 
+        $scope.currencySymbol = function(currency) {
+            return utilService.currencySymbol(currency);
+        }
+
         $scope.loadData = function() {
             bitcoinchartsAPIService.getMarkets($scope.symbol).success(function (response) {
-				//console.log('homeController.loadData()', response);
 				if (response && response[0]) {
 	                var market = response[0];
 					$scope.currency = market.currency;
@@ -37,7 +40,7 @@ angular.module('app.controllers', []).
 							$scope.avg24h = response[$scope.currency]['24h'];
 						}
 						else {
-							utilService.log('Warning: No weighted prices data returned from bitcoinchartsAPIService.getWeightedPrices(' + $scope.currency + ')', response);	
+							$log.warn('Warning: No weighted prices data returned from bitcoinchartsAPIService.getWeightedPrices(' + $scope.currency + ')', response);	
 						}
 
 						// set css class for closing price
@@ -56,7 +59,7 @@ angular.module('app.controllers', []).
 					});
 				}
 				else {
-					utilService.log('Warning: No market data returned from bitcoinchartsAPIService.getMarkets(' + $scope.symbol + ')', response);
+					$log.warn('Warning: No market data returned from bitcoinchartsAPIService.getMarkets(' + $scope.symbol + ')', response);
 				}
             });
         }
@@ -69,7 +72,7 @@ angular.module('app.controllers', []).
 
         $scope.loadData();
     }).
-	controller('weightedController', function($scope, bitcoinchartsAPIService, utilService) {
+	controller('weightedController', function($scope, $log, bitcoinchartsAPIService, utilService) {
         $scope.weightedPrices = {};
         $scope.timestamp = 0;
 
@@ -93,7 +96,7 @@ angular.module('app.controllers', []).
 					delete $scope.weightedPrices['timestamp'];
 				}
 				else {
-					utilService.log('Warning: No weighted prices data returned from bitcoinchartsAPIService.getWeightedPrices()', response);
+					$log.warn('Warning: No weighted prices data returned from bitcoinchartsAPIService.getWeightedPrices()', response);
 				}
             });
         }
@@ -106,7 +109,7 @@ angular.module('app.controllers', []).
 
         $scope.loadData();
     }).
-    controller('marketsController', function($scope, bitcoinchartsAPIService, utilService) {
+    controller('marketsController', function($scope, $log, bitcoinchartsAPIService, utilService) {
         $scope.markets = [];
 
         $scope.currencySymbol = function(currency) {
@@ -123,7 +126,7 @@ angular.module('app.controllers', []).
 					});
 				}
 				else {
-					utilService.log('Warning: No markets data returned from bitcoinchartsAPIService.getMarkets()', response);
+					$log.warn('Warning: No markets data returned from bitcoinchartsAPIService.getMarkets()', response);
 				}
 			});
 		}
@@ -136,10 +139,9 @@ angular.module('app.controllers', []).
 
         $scope.loadData();
     }).
-    controller('tradesBySymbolController', function($scope, $routeParams, bitcoinchartsAPIService, utilService) {
+    controller('tradesBySymbolController', function($scope, $routeParams, $log, bitcoinchartsAPIService) {
         $scope.symbol = $routeParams.id;
         $scope.tradesBySymbol = [[]];
-        //console.log('$scope.symbol:', $scope.symbol);
 
 		$scope.loadData = function() {
 	        bitcoinchartsAPIService.getTradesBySymbol($scope.symbol).success(function (response) {
@@ -147,7 +149,7 @@ angular.module('app.controllers', []).
 		            $scope.tradesBySymbol = response;
 				}
 				else {
-					utilService.log('Warning: No trade data returned from bitcoinchartsAPIService.getTradesBySymbol(' + $scope.symbol + ')', response);					
+					$log.warn('Warning: No trade data returned from bitcoinchartsAPIService.getTradesBySymbol(' + $scope.symbol + ')', response);					
 				}
 			});
 		}
@@ -160,36 +162,35 @@ angular.module('app.controllers', []).
 
         $scope.loadData();
     }).
-    controller('settingsController', function($scope, bitcoinchartsAPIService, utilService) {
-        $scope.currencySymbol = function(currency) {
-            return utilService.currencySymbol(currency);
-        }
+    controller('settingsController', function($scope, $cookies, $log, bitcoinchartsAPIService, settingsService) {
+		$scope.preferredMarket = settingsService.getPreferredMarket();
+
+		$scope.$watch('preferredMarket', function() {
+			// set cookie for preferredMarket any time user changes it in settings
+			settingsService.setPreferredMarket($scope.preferredMarket);
+			$log.info('Set preferred market to', settingsService.getPreferredMarket());
+		});
+
+		$scope.symbols = new Array(); // list of all available market symbols
 
 		$scope.loadData = function() {
 			bitcoinchartsAPIService.getMarkets().success(function (response) {
 				if (response && response.length > 0) {
-					//console.log('marketsController.markets:', response);
-					$scope.markets = response;
-					$scope.markets.forEach(function(entry) {
-						entry.latest_trade = Number(entry.latest_trade) * 1000;
+					response.forEach(function(entry) {
+						$scope.symbols.push(entry.symbol);
 					});
+
 				}
 				else {
-					utilService.log('Warning: No markets data returned from bitcoinchartsAPIService.getMarkets()', response);
+					$log.warn('Warning: No markets data returned from bitcoinchartsAPIService.getMarkets()', response);
 				}
 			});
 		}
 
-        $scope.$on('bitcoinchartsAPIService.refresh', function(event, path) {
-            if (path === '/markets') {
-                $scope.loadData();
-            }
-        });
-
         $scope.loadData();
-
     }).
-    controller('aboutController', function($scope, utilService) {
+    controller('aboutController', function($scope) {
+		// no need for anything here
     });
 
 
