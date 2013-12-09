@@ -5,14 +5,6 @@
 angular.module('app.services', []).
     factory('utilService', function() {
         return {
-			log: function() {
-				if (window.console && console.log) {
-					for (var i = 0; i < arguments.length; i++) {
-					    console.log(arguments[i]);
-					}
-				}
-			},
-
             // This will parse a delimited string into an array of
             // arrays. The default delimiter is the comma, but this
             // can be overriden in the second argument.
