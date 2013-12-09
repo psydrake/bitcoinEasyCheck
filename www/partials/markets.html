@@ -1,0 +1,30 @@
+<div class="container-fluid">
+  <h3 class="muted">Markets</h3>
+
+  <table class="table table-bordered">
+    <tbody>
+      <tr>
+        <th>Symbol</th>
+		<th>Latest Trade</th>
+        <th class="currency">Average</th>
+        <th class="currency">High</th>
+        <th class="currency">Low</th>
+        <th class="currency">Close</th>
+		<th><i class="fa fa-bitcoin"></i> Volume</th>
+      </tr>
+      <tr ng-repeat="market in markets">
+        <td>{{market.symbol}}</td>
+		<td>{{market.latest_trade | date: 'medium'}}</td>
+        <td class="currency">{{market.avg | currency: currencySymbol(market.currency)}}</td>
+        <td class="currency">{{market.high | currency: currencySymbol(market.currency)}}</td>
+        <td class="currency">{{market.low | currency: currencySymbol(market.currency)}}</td>
+        <td class="currency">{{market.close | currency: currencySymbol(market.currency)}}</td>
+        <td>{{market.volume | number}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<script type="text/javascript">
+		trackPage(); // track in google analytics
+</script>
