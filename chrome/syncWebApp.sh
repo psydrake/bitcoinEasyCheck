@@ -1,1 +1,1 @@
-aws s3 sync app/ s3://bitcoineasycheck/
+aws s3 sync www/ s3://bitcoineasycheck/

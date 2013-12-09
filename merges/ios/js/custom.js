@@ -64,6 +64,9 @@ function showAd() {
 }
 
 function initializeUniversalAnalytics() {
-	analytics.startTrackerWithId('UA-45095317-2');
-	analytics.trackView('Main - iOS');
+	analytics.startTrackerWithId('UA-46128370-2');
+}
+
+function trackPage(pageName) {
+	analytics.trackView(pageName);
 }
