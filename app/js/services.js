@@ -101,7 +101,11 @@ angular.module('app.services', []).
                 var symbol = this.currencyMap[code];
                 //console.log('code:', code, 'symbol:', symbol);
                 return symbol ? symbol : '';
-            }
+            },
+
+			getAppVersion: function() {
+				return '1.1';
+			}
         }
     }).
 	factory('settingsService', function($cookies) {

@@ -189,8 +189,8 @@ angular.module('app.controllers', []).
 
         $scope.loadData();
     }).
-    controller('aboutController', function($scope) {
-		// no need for anything here
+    controller('aboutController', function($scope, utilService) {
+		$scope.version = utilService.getAppVersion();
     });
 
 
