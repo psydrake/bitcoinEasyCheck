@@ -160,6 +160,35 @@ angular.module('app.controllers', []).
 
         $scope.loadData();
     }).
+    controller('settingsController', function($scope, bitcoinchartsAPIService, utilService) {
+        $scope.currencySymbol = function(currency) {
+            return utilService.currencySymbol(currency);
+        }
+
+		$scope.loadData = function() {
+			bitcoinchartsAPIService.getMarkets().success(function (response) {
+				if (response && response.length > 0) {
+					//console.log('marketsController.markets:', response);
+					$scope.markets = response;
+					$scope.markets.forEach(function(entry) {
+						entry.latest_trade = Number(entry.latest_trade) * 1000;
+					});
+				}
+				else {
+					utilService.log('Warning: No markets data returned from bitcoinchartsAPIService.getMarkets()', response);
+				}
+			});
+		}
+
+        $scope.$on('bitcoinchartsAPIService.refresh', function(event, path) {
+            if (path === '/markets') {
+                $scope.loadData();
+            }
+        });
+
+        $scope.loadData();
+
+    }).
     controller('aboutController', function($scope, utilService) {
     });
 
