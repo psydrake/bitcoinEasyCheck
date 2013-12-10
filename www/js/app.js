@@ -19,7 +19,9 @@ var app = angular.module('app', [
 			otherwise({redirectTo: "/home"});
 }]);
 
-app.run(function($rootScope, $location, $timeout, $log) {
+app.run(function($rootScope, $location, $timeout, $log, settingsService) {
+	settingsService.setStore(new Persist.Store('Bitcoin Easy Check'));
+
 	$rootScope.loadingClass = '';
 
     $rootScope.getClass = function(path) {

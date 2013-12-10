@@ -110,12 +110,16 @@ angular.module('app.services', []).
     }).
 	factory('settingsService', function() {
 		return {
-			store: new Persist.Store('Bitcoin Easy Check'),
+			store: null,
+
+			setStore: function(theStore) {
+				this.store = theStore;
+			},
 
 			getPreferredMarket: function() {
 				//return $cookies.preferredMarket ? $cookies.preferredMarket : 'mtgoxUSD';
 				var preferredMarket = 'mtgoxUSD';
-				if (this.store) {
+				if (this.store && this.store.get('preferredMarket')) {
 					preferredMarket = this.store.get('preferredMarket');
 				}
 				return preferredMarket;
@@ -123,7 +127,7 @@ angular.module('app.services', []).
 
 			setPreferredMarket: function(preferredMarket) {
 				//$cookies.preferredMarket = preferredMarket;
-				if (this.store) {
+				if (preferredMarket && this.store) {
 					this.store.set('preferredMarket', preferredMarket);
 				}
 			}
