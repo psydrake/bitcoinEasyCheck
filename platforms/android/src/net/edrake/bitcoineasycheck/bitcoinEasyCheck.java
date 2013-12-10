@@ -21,17 +21,30 @@ package net.edrake.bitcoineasycheck;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
+import com.google.ads.*;
+import com.google.analytics.tracking.android.EasyTracker;
 
-public class bitcoinEasyCheck extends CordovaActivity 
-{
+public class bitcoinEasyCheck extends CordovaActivity {
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.init();
         // Set by <content src="index.html" /> in config.xml
         super.loadUrl(Config.getStartUrl());
         //super.loadUrl("file:///android_asset/www/index.html")
     }
+
+    @Override
+    public void onStart() {
+      super.onStart();      
+      EasyTracker.getInstance(this).activityStart(this); // Google analytics
+    }
+
+    @Override
+    public void onStop() {
+      super.onStop();      
+      EasyTracker.getInstance(this).activityStop(this); // Google analytics      
+    }
+
 }
 
