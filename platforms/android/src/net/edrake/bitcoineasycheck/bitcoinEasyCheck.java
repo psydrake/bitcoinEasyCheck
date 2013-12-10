@@ -20,11 +20,18 @@
 package net.edrake.bitcoineasycheck;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
+import android.view.View;
+
 import org.apache.cordova.*;
 import com.google.ads.*;
 import com.google.analytics.tracking.android.EasyTracker;
 
 public class bitcoinEasyCheck extends CordovaActivity {
+
+	private final static String ADMOB_AD_UNIT = "ca-app-pub-8928397865273246/7500862619";
+	private AdView adView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +39,14 @@ public class bitcoinEasyCheck extends CordovaActivity {
         // Set by <content src="index.html" /> in config.xml
         super.loadUrl(Config.getStartUrl());
         //super.loadUrl("file:///android_asset/www/index.html")
+
+        // Google AdMob
+        adView = new AdView(this, AdSize.BANNER, ADMOB_AD_UNIT); 
+        LinearLayout layout = super.root;
+        layout.addView(adView); 
+        AdRequest request = new AdRequest();
+        //request.setTesting(true);
+        adView.loadAd(request);
     }
 
     @Override
