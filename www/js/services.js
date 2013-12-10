@@ -103,6 +103,15 @@ angular.module('app.services', []).
                 return symbol ? symbol : '';
             },
 
+			getCurrencyAbbrev: function(symbol) {
+				if (symbol && symbol.length > 3) {
+					return symbol.substr(symbol.length - 3);
+				}
+				else {
+					return '';
+				}
+			},
+
 			getAppVersion: function() {
 				return '1.1.1'; // version
 			}
