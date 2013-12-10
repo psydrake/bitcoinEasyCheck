@@ -50,7 +50,8 @@ app.run(function($rootScope, $location, $timeout, $log, settingsService) {
 
 	// refresh the page every 5 minutes
 	$timeout(function() {
-		document.location.reload(true);
+		//document.location.reload(true);
+		$rootScope.loadData();
 	}, 300000);
 
 });
