@@ -162,11 +162,11 @@ angular.module('app.controllers', []).
 
         $scope.loadData();
     }).
-    controller('settingsController', function($scope, $cookies, $log, bitcoinchartsAPIService, settingsService) {
+    controller('settingsController', function($scope, $log, bitcoinchartsAPIService, settingsService) {
 		$scope.preferredMarket = settingsService.getPreferredMarket();
 
 		$scope.$watch('preferredMarket', function() {
-			// set cookie for preferredMarket any time user changes it in settings
+			// save preferredMarket any time user changes it in settings
 			settingsService.setPreferredMarket($scope.preferredMarket);
 			$log.info('Set preferred market to', settingsService.getPreferredMarket());
 		});

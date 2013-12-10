@@ -108,14 +108,24 @@ angular.module('app.services', []).
 			}
         }
     }).
-	factory('settingsService', function($cookies) {
+	factory('settingsService', function() {
 		return {
+			store: new Persist.Store('Bitcoin Easy Check'),
+
 			getPreferredMarket: function() {
-				return $cookies.preferredMarket ? $cookies.preferredMarket : 'mtgoxUSD';
+				//return $cookies.preferredMarket ? $cookies.preferredMarket : 'mtgoxUSD';
+				var preferredMarket = 'mtgoxUSD';
+				if (this.store) {
+					preferredMarket = this.store.get('preferredMarket');
+				}
+				return preferredMarket;
 			},
 
 			setPreferredMarket: function(preferredMarket) {
-				$cookies.preferredMarket = preferredMarket;
+				//$cookies.preferredMarket = preferredMarket;
+				if (this.store) {
+					this.store.set('preferredMarket', preferredMarket);
+				}
 			}
 		}
 	}).
