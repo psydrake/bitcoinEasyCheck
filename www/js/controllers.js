@@ -180,6 +180,7 @@ angular.module('app.controllers', []).
 					response.forEach(function(entry) {
 						$scope.symbols.push(entry.symbol);
 					});
+					$scope.symbols.sort();
 				}
 				else {
 					$log.warn('Warning: No markets data returned from bitcoinchartsAPIService.getMarkets()', response);
