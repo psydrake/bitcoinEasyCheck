@@ -4,6 +4,7 @@
 var app = angular.module('app', [
         'app.controllers',
         'app.services',
+        'app.customService',
         'ngRoute',
 		//'ngCookies',
         'ui.bootstrap'
@@ -19,7 +20,7 @@ var app = angular.module('app', [
 			otherwise({redirectTo: "/home"});
 }]);
 
-app.run(function($rootScope, $location, $timeout, $log, settingsService) {
+app.run(function($rootScope, $location, $timeout, $log, settingsService, customService) {
 	settingsService.setStore(new Persist.Store('Bitcoin Easy Check'));
 
 	$rootScope.loadingClass = '';
@@ -43,10 +44,7 @@ app.run(function($rootScope, $location, $timeout, $log, settingsService) {
 			}, 1000);
     }
 
-	// run on load
-	$timeout(function() {
-		doCustomActions(); // perform platform-specific javascript
-	}, 1000);
+	customService.doCustomActions(); // perform platform-specific javascript
 
 	// refresh the page every 5 minutes
 	$timeout(function() {
