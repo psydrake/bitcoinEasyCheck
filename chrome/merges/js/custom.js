@@ -1,6 +1,6 @@
-function openLink(link) {
-	window.open(encodeURI(link));
-}
+//function openLink(link) {
+//	window.open(encodeURI(link));
+//}
 
 function doCustomActions() {
 	// no custom actions needed in hosted webapp
