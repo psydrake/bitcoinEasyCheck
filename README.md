@@ -11,7 +11,8 @@ Bitcoin Easy Check consists of two parts:
 The front end communicates with the back end via [JSONP](http://en.wikipedia.org/wiki/JSONP) calls. The backend polls api.bitcoincharts.com every 15 minutes, and it stores this data in [memcache](https://developers.google.com/appengine/docs/python/memcache/) for all subsequent client requests, in order to reduce load on the bitcoincharts server.
 
 ## Install On Your Phone / Tablet
-* [Advice Owl for Android](https://play.google.com/store/apps/details?id=net.edrake.bitcoineasycheck)
+* [Bitcoin Easy Check for Android](https://play.google.com/store/apps/details?id=net.edrake.bitcoineasycheck)
+* [Bitcoin Easy Check for Kindle Fire](http://www.amazon.com/Drake-Emko-Bitcoin-Easy-Check/dp/B00H8KQZU4/ref=sr_1_1?s=mobile-apps&ie=UTF8&qid=1386772951&sr=1-1&keywords=bitcoin+easy+check)
 
 ## Use As A Web App
 * [Bitcoin Easy Check in the Chrome Web Store](https://chrome.google.com/webstore/detail/bitcoin-easy-check/dimfclahciiblaklehjikenimaafpaef)
