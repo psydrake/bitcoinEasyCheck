@@ -1,0 +1,31 @@
+<!--<div class="row-fluid" style="margin-left:auto; margin-right:auto">-->
+<div class="container-fluid">
+    <h3 class="muted left">Weighted Average Prices</h3>
+	<h3 class="muted right">{{timestamp | date: 'MMM d, y h:mm a'}}</h3>
+
+    <table class="table table-bordered" ng-repeat="(key, value) in weightedPrices" ng-show="key === preferredCurrencyAbbrev">
+		<thead>
+			<tr>
+				<th colspan="2">Currency: {{key}}</th>
+			</tr>
+		</thead>
+        <tbody>
+			<tr>
+	            <td class="currency">24 hours</td>
+	            <td class="currency">{{value.24h | currency: currencySymbol(key)}}</td>
+			</tr>
+			<tr>
+	            <td class="currency">7 days</td>
+	            <td class="currency">{{value.7d | currency: currencySymbol(key)}}</td>
+			</tr>
+			<tr>
+	            <td class="currency">30 days</td>
+	            <td class="currency">{{value.30d | currency: currencySymbol(key)}}</td>
+			</tr>
+        </tbody>
+    </table>
+</div>
+
+<script type="text/javascript">
+		trackPage('weighted'); // track in google analytics
+</script>

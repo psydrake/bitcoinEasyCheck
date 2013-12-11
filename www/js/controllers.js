@@ -72,9 +72,10 @@ angular.module('app.controllers', []).
 
         $scope.loadData();
     }).
-	controller('weightedController', function($scope, $log, bitcoinchartsAPIService, utilService) {
+	controller('weightedController', function($scope, $log, bitcoinchartsAPIService, settingsService, utilService) {
         $scope.weightedPrices = {};
         $scope.timestamp = 0;
+		$scope.preferredCurrencyAbbrev = utilService.getCurrencyAbbrev(settingsService.getPreferredMarket());
 
         /*$scope.marketFilter = null;
         $scope.searchFilter = function(market) {
