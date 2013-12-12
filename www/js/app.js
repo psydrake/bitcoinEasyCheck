@@ -33,7 +33,7 @@ app.run(function($rootScope, $location, $timeout, $log, settingsService, customS
         else {
             return "";
         }
-    }
+    };
 
 	$rootScope.openLink = customService.openLink;
 
@@ -44,13 +44,12 @@ app.run(function($rootScope, $location, $timeout, $log, settingsService, customS
 		$timeout(function() {
 				$rootScope.loadingClass = ''; // stop spinner
 			}, 1000);
-    }
+    };
 
-	// refresh the page every 5 minutes
+	// reload the page every 10 minutes
 	$timeout(function() {
-		//document.location.reload(true);
-		$rootScope.loadData();
-	}, 300000);
+		document.location.reload(true);
+	}, 600000);
 
 	customService.doCustomActions(); // perform platform-specific javascript
 
