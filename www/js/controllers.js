@@ -50,11 +50,11 @@ angular.module('app.controllers', []).
 						else if ($scope.close > $scope.avg24h) {
 							$scope.closePriceClass = 'priceUp';
 						}
-						else if ($scope.close === $scope.avg24h) {
-							$scope.closePriceClass = 'priceSame';
-						}
 						else if ($scope.close < $scope.avg24h) {
 							$scope.closePriceClass = 'priceDown';
+						}
+						else {
+							$scope.closePriceClass = 'priceSame';
 						}
 					});
 				}
@@ -79,17 +79,24 @@ angular.module('app.controllers', []).
         $scope.timestamp = 0;
 		$scope.preferredCurrencyAbbrev = utilService.getCurrencyAbbrev(settingsService.getPreferredMarket());
 
-        /*$scope.marketFilter = null;
-        $scope.searchFilter = function(market) {
-            console.log('market:', market);
-            //console.log('prices:', prices);
-            var keyword = new RegExp($scope.marketFilter, 'i');
-            return !$scope.marketFilter || keyword.test(market);
-        };*/
-
         $scope.currencySymbol = function(currency) {
             return utilService.currencySymbol(currency);
         }
+
+		$scope.get24hClass = function(val24h, val7d) {
+			if (!val24h || !val7d) {
+				return 'priceUnknown';
+			}
+			else if (val24h > val7d) {
+				return 'priceUp';
+			}
+			else if (val24h < val7d) {
+				return 'priceDown';
+			}
+			else {
+				return 'priceSame';
+			}
+		}
 
         $scope.loadData = function() {
             bitcoinchartsAPIService.getWeightedPrices().success(function (response) {

@@ -11,7 +11,7 @@
         </tr>
         <tr ng-repeat="(key, value) in weightedPrices">
             <td>{{key}}</td>
-            <td class="currency">{{value.24h | currency: currencySymbol(key)}}</td>
+            <td class="currency" ng-class="get24hClass(value.24h, value.7d)">{{value.24h | currency: currencySymbol(key)}}</td>
             <td class="currency">{{value.7d | currency: currencySymbol(key)}}</td>
             <td class="currency">{{value.30d | currency: currencySymbol(key)}}</td>
         </tr>

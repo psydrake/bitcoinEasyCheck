@@ -12,7 +12,7 @@
         <tbody>
 			<tr>
 	            <td class="currency">24 hours</td>
-	            <td class="currency">{{value.24h | currency: currencySymbol(key)}}</td>
+	            <td class="currency" ng-class="get24hClass(value.24h, value.7d)">{{value.24h | currency: currencySymbol(key)}}</td>
 			</tr>
 			<tr>
 	            <td class="currency">7 days</td>
