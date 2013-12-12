@@ -1,6 +1,6 @@
 <div class="container-fluid">
-    <h3 class="muted left">Weighted Average Prices</h3>
-	<h3 class="muted right">{{timestamp | date: 'MMM d, y h:mm a'}}</h3>
+    <h4 class="muted left">Weighted Average Prices</h4>
+	<h4 class="muted right">{{timestamp | date: 'MMM d, y h:mm a'}}</h4>
 
     <table class="table table-bordered" ng-repeat="(key, value) in weightedPrices" ng-show="key === preferredCurrencyAbbrev">
 		<thead>
