@@ -46,12 +46,12 @@ app.run(function($rootScope, $location, $timeout, $log, settingsService, customS
 			}, 1000);
     }
 
-	customService.doCustomActions(); // perform platform-specific javascript
-
 	// refresh the page every 5 minutes
 	$timeout(function() {
 		//document.location.reload(true);
 		$rootScope.loadData();
 	}, 300000);
+
+	customService.doCustomActions(); // perform platform-specific javascript
 
 });
