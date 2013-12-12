@@ -13,9 +13,9 @@ tmp
 **/bin/*
 platforms/android/assets/www
 platforms/ios/www
-platforms/ios/Bitcoin\ Easy\ Check.xcodeproj/xcuserdata
-platforms/ios/Bitcoin\ Easy\ Check.xcodeproj/project.xcworkspace
-platforms/ios/Bitcoin\ Easy\ Check.xcodeproj/project.pbxproj
+platforms/ios/CordovaLib/CordovaLib.xcodeproj/xcuserdata/
+platforms/ios/Bitcoin\ Easy\ Check.xcodeproj/project.xcworkspace/
+platforms/ios/Bitcoin\ Easy\ Check.xcodeproj/project.pbxproj/
 console.log
 chrome/app.zip
 chrome/www/*

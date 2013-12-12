@@ -35,6 +35,8 @@ app.run(function($rootScope, $location, $timeout, $log, settingsService, customS
         }
     }
 
+	$rootScope.openLink = customService.openLink;
+
     $rootScope.loadData = function() {
 		$rootScope.loadingClass = 'fa-spin';
         $log.info('loadData! ' + $location.path());

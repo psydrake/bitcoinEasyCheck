@@ -2,6 +2,11 @@
 angular.module('app.customService', []).
     factory('customService', function($timeout) {
         return {
+			openLink: function(link) {
+				// Android specific - open links using native browser
+				navigator.app.loadUrl(link, { openExternal: true });
+			},
+
 			trackPage: function() {
 				$timeout(function() {
 					if (typeof analytics !== "undefined") {
