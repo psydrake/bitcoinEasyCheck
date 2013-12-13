@@ -43,7 +43,7 @@ app.run(function($rootScope, $location, $timeout, $log, settingsService, customS
         $rootScope.$broadcast('bitcoinchartsAPIService.refresh', $location.path());
 		$timeout(function() {
 				$rootScope.loadingClass = ''; // stop spinner
-			}, 1000);
+			}, 2000);
     };
 
 	// reload the page every 10 minutes

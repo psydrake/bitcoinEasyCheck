@@ -68,7 +68,7 @@ angular.module('app.controllers', []).
 
         $rootScope.loadData();
 
-		customService.trackPage();
+		customService.trackPage('/home');
     }).
 	controller('weightedController', function($scope, $rootScope, $log, bitcoinchartsAPIService, settingsService, utilService, customService) {
         $scope.weightedPrices = {};
@@ -115,7 +115,7 @@ angular.module('app.controllers', []).
 
         $rootScope.loadData();
 
-		customService.trackPage();
+		customService.trackPage('/weighted');
     }).
     controller('marketsController', function($scope, $rootScope, $log, bitcoinchartsAPIService, utilService, customService) {
         $scope.markets = [];
@@ -147,7 +147,7 @@ angular.module('app.controllers', []).
 
         $rootScope.loadData();
 
-		customService.trackPage();
+		customService.trackPage('/markets');
     }).
     controller('tradesBySymbolController', function($scope, $rootScope, $routeParams, $log, bitcoinchartsAPIService, customService) {
         $scope.symbol = $routeParams.id;
@@ -172,7 +172,7 @@ angular.module('app.controllers', []).
 
         $rootScope.loadData();
 
-		customService.trackPage();
+		customService.trackPage('/trades');
     }).
     controller('settingsController', function($scope, $rootScope, $log, bitcoinchartsAPIService, settingsService, customService) {
 		$scope.preferredMarket = settingsService.getPreferredMarket();
@@ -207,12 +207,12 @@ angular.module('app.controllers', []).
 
         $rootScope.loadData();
 
-		customService.trackPage();
+		customService.trackPage('/settings');
     }).
     controller('aboutController', function($scope, utilService, customService) {
 		$scope.version = utilService.getAppVersion();
 
-		customService.trackPage();
+		customService.trackPage('/about');
     });
 
 

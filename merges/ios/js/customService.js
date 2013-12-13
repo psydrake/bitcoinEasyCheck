@@ -59,10 +59,10 @@ angular.module('app.customService', []).
 				}
 			},
 
-			trackPage: function() {
+			trackPage: function(page) {
 				$timeout(function() {
 					if (typeof analytics !== "undefined") {
-						analytics.trackView();
+						analytics.trackView(page);
 					}
 				}, 1500);
 			},

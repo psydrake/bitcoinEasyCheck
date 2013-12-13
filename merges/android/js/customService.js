@@ -7,10 +7,10 @@ angular.module('app.customService', []).
 				navigator.app.loadUrl(link, { openExternal: true });
 			},
 
-			trackPage: function() {
+			trackPage: function(page) {
 				$timeout(function() {
 					if (typeof analytics !== "undefined") {
-						analytics.trackView();
+						analytics.trackView(page);
 					}
 				}, 1500);
 			},

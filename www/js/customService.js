@@ -4,7 +4,7 @@
 angular.module('app.customService', []).
     factory('customService', function() {
         return {
-			trackPage: function() {
+			trackPage: function(page) {
 				// place platform-specific google analytics tracking code here
 			},
 
