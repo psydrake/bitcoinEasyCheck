@@ -13,7 +13,9 @@ angular.module('app.customService', []).
 				  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 				  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 				  ga('create', 'UA-46128370-1', 'd26tzgk0gx1hwh.cloudfront.net');
-				  ga('send', 'pageview');
+				  ga('send', 'pageview', {
+					'page': page
+				  });
 				}, 1500);
 			},
 
