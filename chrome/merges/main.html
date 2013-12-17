@@ -18,14 +18,6 @@
     <script type="text/javascript" src="js/controllers.js"></script>
     <script type="text/javascript" src="js/services.js"></script>
     <script type="text/javascript" src="js/customService.js"></script>
-	<!--
-	<script type="text/javascript">
-		// workaround for overlayed status bar in iOS 7
-		if (navigator && navigator.userAgent && navigator.userAgent.match(/OS 7/)) {
-			document.write('<style type="text/css">body{-webkit-transform: translate3d(0,20px,0)}</style>');
-		}
-	</script>
-	-->
 </head>
 <body ng-app="app">
 <div class="container">
@@ -37,7 +29,7 @@
                           <!-- You can use regular expressions -->
                           <li data-match-route="/home" ng-class="getClass('/home')"><a href="#/home"><i class="fa fa-2x fa-home"></i></a></li>
                           <li data-match-route="/weighted" ng-class="getClass('/weighted')"><a href="#/weighted"><i class="fa fa-2x fa-calendar"></i></a></li>
-                          <!--<li data-match-route="/markets" ng-class="getClass('/markets')"><a href="#/markets"><i class="fa fa-2x fa-bars"></i></a></li>-->
+                          <li data-match-route="/markets" ng-class="getClass('/markets')"><a href="#/markets"><i class="fa fa-2x fa-bars"></i></a></li>
                           <!--<li data-match-route="/trades/mtgoxUSD"><a href="#/trades/mtgoxUSD">mtgoxUSD</a></li>-->
                           <li data-match-route="/settings" ng-class="getClass('/settings')"><a href="#/settings"><i class="fa fa-2x fa-wrench"></i></a></li>
 						  <li data-match-route="/about" ng-class="getClass('/about')"><a href="#/about"><i class="fa fa-2x fa-info-circle"></i></a></li>

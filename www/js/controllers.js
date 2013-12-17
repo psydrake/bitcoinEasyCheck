@@ -80,18 +80,7 @@ angular.module('app.controllers', []).
         }
 
 		$scope.get24hClass = function(val24h, val7d) {
-			if (!val24h || !val7d) {
-				return 'priceUnknown';
-			}
-			else if (val24h > val7d) {
-				return 'priceUp';
-			}
-			else if (val24h < val7d) {
-				return 'priceDown';
-			}
-			else {
-				return 'priceSame';
-			}
+			return utilService.getPriceCompareClass(val24h, val7d);
 		}
 
         $scope.loadData = function() {
@@ -123,6 +112,10 @@ angular.module('app.controllers', []).
         $scope.currencySymbol = function(currency) {
             return utilService.currencySymbol(currency);
         }
+
+		$scope.getClosePriceClass = function(closePrice, avgPrice) {
+			return utilService.getPriceCompareClass(closePrice, avgPrice);
+		}
 
 		$scope.loadData = function() {
 			bitcoinchartsAPIService.getMarkets().success(function (response) {

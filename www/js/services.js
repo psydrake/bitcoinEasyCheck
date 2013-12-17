@@ -112,6 +112,21 @@ angular.module('app.services', []).
 				}
 			},
 
+			getPriceCompareClass: function(price1, price2) {
+				if (!price1 || !price2) {
+					return 'priceUnknown';
+				}
+				else if (price1 > price2) {
+					return 'priceUp';
+				}
+				else if (price1 < price2) {
+					return 'priceDown';
+				}
+				else {
+					return 'priceSame';
+				}
+			},
+
 			getAppVersion: function() {
 				return '1.4.4'; // version
 			}
