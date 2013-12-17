@@ -21,5 +21,13 @@ module.exports = [
             "window.plugins.AdMob"
         ]
     }
-]
+];
+module.exports.metadata = 
+// TOP OF METADATA
+{
+    "com.danielcwilson.plugins.googleanalytics": "0.2.0",
+    "org.apache.cordova.inappbrowser": "0.2.5",
+    "com.rjfun.cordova.plugin.admob": "1.1"
+}
+// BOTTOM OF METADATA
 });
