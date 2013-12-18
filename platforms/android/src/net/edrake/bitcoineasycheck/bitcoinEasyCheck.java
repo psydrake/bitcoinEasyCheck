@@ -30,7 +30,7 @@ import com.google.analytics.tracking.android.Fields;
 
 public class bitcoinEasyCheck extends CordovaActivity {
 
-	private final static String ADMOB_AD_UNIT = "ca-app-pub-8928397865273246/7500862619";
+	private final static String ADMOB_AD_UNIT = "ca-app-pub-8928397865273246/3976829810";
 	private AdView adView;
 
     @Override
@@ -41,7 +41,6 @@ public class bitcoinEasyCheck extends CordovaActivity {
         super.loadUrl(Config.getStartUrl());
         //super.loadUrl("file:///android_asset/www/index.html")
 
-		/*
         // Google AdMob
         adView = new AdView(this, AdSize.BANNER, ADMOB_AD_UNIT); 
         LinearLayout layout = super.root;
@@ -49,7 +48,6 @@ public class bitcoinEasyCheck extends CordovaActivity {
         AdRequest request = new AdRequest();
         //request.setTesting(true);
         adView.loadAd(request);
-		*/
     }
 
     @Override
