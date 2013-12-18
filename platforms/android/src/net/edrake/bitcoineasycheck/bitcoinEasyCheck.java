@@ -26,6 +26,7 @@ import android.view.View;
 import org.apache.cordova.*;
 import com.google.ads.*;
 import com.google.analytics.tracking.android.EasyTracker;
+import com.google.analytics.tracking.android.Fields;
 
 public class bitcoinEasyCheck extends CordovaActivity {
 
@@ -40,6 +41,7 @@ public class bitcoinEasyCheck extends CordovaActivity {
         super.loadUrl(Config.getStartUrl());
         //super.loadUrl("file:///android_asset/www/index.html")
 
+		/*
         // Google AdMob
         adView = new AdView(this, AdSize.BANNER, ADMOB_AD_UNIT); 
         LinearLayout layout = super.root;
@@ -47,12 +49,15 @@ public class bitcoinEasyCheck extends CordovaActivity {
         AdRequest request = new AdRequest();
         //request.setTesting(true);
         adView.loadAd(request);
+		*/
     }
 
     @Override
     public void onStart() {
       super.onStart();      
-      EasyTracker.getInstance(this).activityStart(this); // Google analytics
+      EasyTracker et = EasyTracker.getInstance(this);
+	  et.set(Fields.SCREEN_NAME, "Main - Blackberry");
+	  et.activityStart(this); // Google analytics
     }
 
     @Override
