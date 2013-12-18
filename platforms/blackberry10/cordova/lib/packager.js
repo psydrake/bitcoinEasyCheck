@@ -38,6 +38,8 @@ module.exports = {
 
             //parse config.xml
             logger.log(localize.translate("PROGRESS_SESSION_CONFIGXML"));
+            //logger.log(path.join(session.sourceDir + "../../../platforms/blackberry10/www", "config.xml"));
+            //configParser.parse(path.join(session.sourceDir + "../../../platforms/blackberry10/www", "config.xml"), session, function (configObj) {
             configParser.parse(path.join(session.sourceDir, "config.xml"), session, function (configObj) {
                 //validate session Object
                 packagerValidator.validateSession(session, configObj);

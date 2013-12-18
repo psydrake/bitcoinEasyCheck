@@ -113,7 +113,7 @@ try {
 
                 //Delete cached commander object. It will conflict with the packagers commander
                 delete require.cache[require.resolve("commander")];
-                delete require.cache[require.resolve("commander/lib/commander")];
+                //delete require.cache[require.resolve("commander/lib/commander")];
 
                 require("./packager").start(done);
             }

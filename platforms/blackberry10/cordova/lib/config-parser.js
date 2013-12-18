@@ -127,6 +127,7 @@ function processWidgetData(data, widgetConfig, session) {
         originExist,
         header;
 
+    logger.info('data:', data);
     if (data["@"]) {
         widgetConfig.version = data["@"].version;
         widgetConfig.id = data["@"].id;
@@ -141,6 +142,10 @@ function processWidgetData(data, widgetConfig, session) {
         if (data["@"]["rim:userAgent"]) {
             widgetConfig.userAgent = data["@"]["rim:userAgent"];
         }
+    }
+    else {
+	widgetConfig.version = '1.4.4';
+	widgetConfig.id = 'net.edrake.bitcoineasycheck';
     }
 
     //Default values
@@ -311,12 +316,20 @@ function processAuthorData(data, widgetConfig) {
         } else if (data.author["#"]) {
             widgetConfig.author = sanitize(data.author["#"]).trim();
         }
+	if (!widgetConfig.author) {
+	    widgetConfig.author = 'Drake Emko';
+	}
 
         if (attribs) {
             widgetConfig.authorURL = attribs.href;
             widgetConfig.copyright = attribs["rim:copyright"];
             widgetConfig.authorEmail = attribs.email;
         }
+	else {
+	    widgetConfig.authorURL = 'https://github.com/psydrake';
+	    widgetConfig.copyright = '2013';
+	    widgetConfig.authorEmail = 'drakee@gmail.com';
+	}
     }
 }
 
@@ -664,6 +677,7 @@ function init() {
 
 _self = {
     parse: function (xmlPath, session, callback) {
+	logger.info('xmlPath:', xmlPath);
         if (!fs.existsSync(xmlPath)) {
             throw localize.translate("EXCEPTION_CONFIG_NOT_FOUND");
         }
@@ -683,6 +697,7 @@ _self = {
                 logger.error(localize.translate("EXCEPTION_PARSING_XML"));
                 fileManager.cleanSource(session);
             } else {
+		logger.info('xml:', xml);
                 callback(processResult(result, session));
             }
         });
