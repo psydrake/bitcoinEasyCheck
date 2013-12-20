@@ -64,7 +64,7 @@ def pullWeightedPrices():
 
 @bottle.route('/api/markets')
 @bottle.route('/api/markets/')
-@bottle.route('/api/markets/<symbol:re:[a-z]+[A-Z][A-Z][A-Z]>')
+@bottle.route('/api/markets/<symbol:re:[a-z0-9]+[A-Z][A-Z][A-Z]>')
 def markets(symbol=''):
     response.content_type = 'application/json; charset=utf-8'
 
