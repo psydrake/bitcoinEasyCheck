@@ -183,7 +183,9 @@ angular.module('app.services', []).
                 if (this.store) {
                     this.store.set(key, value);
                 }
-            }
+            },
+
+            weightedPrices: {}
         }
     }).
     factory('bitcoinchartsAPIService', function($http, utilService) {

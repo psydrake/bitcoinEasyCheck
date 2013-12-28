@@ -48,7 +48,8 @@ angular.module('app.controllers', []).
 
                     bitcoinchartsAPIService.getWeightedPrices([$scope.currency]).success(function (response) {
                         if (response && response[$scope.currency]) {
-                            $scope.avg24h = response[$scope.currency]['24h'];
+                            settingsService.setNumValue('avg24h', response[$scope.currency]['24h']);
+                            $scope.avg24h = settingsService.getNumValue('avg24h');
 						}
 						else {
 							$log.warn('Warning: No weighted prices data returned from bitcoinchartsAPIService.getWeightedPrices(' + $scope.currency + ')', response);	
@@ -86,8 +87,8 @@ angular.module('app.controllers', []).
 		customService.trackPage('/home');
     }).
 	controller('weightedController', function($scope, $rootScope, $log, bitcoinchartsAPIService, settingsService, utilService, customService) {
-        $scope.weightedPrices = {};
-        $scope.timestamp = 0;
+        $scope.weightedPrices = settingsService.weightedPrices;
+        $scope.timestamp = settingsService.getNumValue('timestamp');
 		$scope.preferredCurrencyAbbrev = utilService.getCurrencyAbbrev(settingsService.getPreferredMarket());
 
         $scope.currencySymbol = function(currency) {
@@ -101,9 +102,12 @@ angular.module('app.controllers', []).
         $scope.loadData = function() {
             bitcoinchartsAPIService.getWeightedPrices().success(function (response) {
 				if (response && response.timestamp) {
-	                $scope.timestamp = Number(response['timestamp']) * 1000;
-	                $scope.weightedPrices = response;
-					delete $scope.weightedPrices['timestamp'];
+                    settingsService.setNumValue('timestamp', Number(response['timestamp']) * 1000);
+                    $scope.timestamp = settingsService.getNumValue('timestamp');
+
+                    settingsService.weightedPrices = response;
+                    delete settingsService.weightedPrices['timestamp'];
+	                $scope.weightedPrices = settingsService.weightedPrices;
 				}
 				else {
 					$log.warn('Warning: No weighted prices data returned from bitcoinchartsAPIService.getWeightedPrices()', response);
