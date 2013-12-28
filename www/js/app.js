@@ -26,7 +26,7 @@ app.run(function($rootScope, $location, $timeout, $log, settingsService, customS
 	$rootScope.loadingClass = '';
 
     $rootScope.getClass = function(path) {
-		$log.debug('path: '+ path + ', $location.path(): ' + $location.path());
+		//$log.debug('path: '+ path + ', $location.path(): ' + $location.path());
         if ($location.path().substr(0, path.length) === path) {
             return "active";
         }

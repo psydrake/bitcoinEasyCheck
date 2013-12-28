@@ -141,7 +141,6 @@ angular.module('app.services', []).
 			},
 
 			getPreferredMarket: function() {
-				//return $cookies.preferredMarket ? $cookies.preferredMarket : 'mtgoxUSD';
 				var preferredMarket = 'mtgoxUSD';
 				if (this.store && this.store.get('preferredMarket')) {
 					preferredMarket = this.store.get('preferredMarket');
@@ -154,9 +153,39 @@ angular.module('app.services', []).
 				if (preferredMarket && this.store) {
 					this.store.set('preferredMarket', preferredMarket);
 				}
-			}
-		}
-	}).
+			},
+
+            getCurrency: function() {
+                var currency = 'USD';
+                if (this.store && this.store.get('currency')) {
+                    currency = this.store.get('currency');
+                }
+                return currency;
+            },
+
+            setCurrency: function(currency) {
+                if (currency && this.store) {
+                    this.store.set('currency', currency);
+                }
+            },
+
+            // get a number value by key - defaults to zero if not found in local storage
+            getNumValue: function(key) {
+                var value = 0;
+                if (this.store && this.store.get(key)) {
+                    value = Number(this.store.get(key));
+                }
+                return value;
+            },
+
+            // set a number value by key
+            setNumValue: function(key, value) {
+                if (this.store) {
+                    this.store.set(key, value);
+                }
+            }
+        }
+    }).
     factory('bitcoinchartsAPIService', function($http, utilService) {
         var bccAPI = {};
 
