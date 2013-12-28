@@ -3,15 +3,15 @@
 angular.module('app.controllers', []).
     controller('homeController', function($scope, $rootScope, $log, bitcoinchartsAPIService, utilService, settingsService, customService) {
         $scope.symbol = settingsService.getPreferredMarket();
-        $scope.currency = null;
-        $scope.latest_trade = 0; // unix time of latest trade
-        $scope.low = 0; // lowest trade during day
-        $scope.high = 0; // highest trade during day
-        $scope.volume = 0; // total trade volume of day in BTC
-        $scope.currency_volume = 0; // total trade volume of day in currency
-        $scope.close = 0; // latest trade
-        $scope.previous_close = 0; // latest trade of previous day
-        $scope.avg24h = 0;
+        $scope.currency = settingsService.getCurrency();
+        $scope.latest_trade = settingsService.getNumValue('latest_trade'); // unix time of latest trade
+        $scope.low = settingsService.getNumValue('low'); // lowest trade during day
+        $scope.high = settingsService.getNumValue('high'); // highest trade during day
+        $scope.volume = settingsService.getNumValue('volume'); // total trade volume of day in BTC
+        $scope.currency_volume = settingsService.getNumValue('currency_volume'); // total trade volume of day in currency
+        $scope.close = settingsService.getNumValue('close'); // latest trade
+        $scope.previous_close = settingsService.getNumValue('previous_close'); // latest trade of previous day
+        $scope.avg24h = settingsService.getNumValue('avg24h');
 
         $scope.currencySymbol = function(currency) {
             return utilService.currencySymbol(currency);
@@ -21,19 +21,35 @@ angular.module('app.controllers', []).
             bitcoinchartsAPIService.getMarkets($scope.symbol).success(function (response) {
 				if (response && response[0]) {
 	                var market = response[0];
-					$scope.currency = market.currency;
-					$scope.latest_trade = Number(market.latest_trade) * 1000; // unix time of latest trade
-					$scope.low = market.low; // lowest trade during day
-					$scope.high = market.high; // highest trade during day
-					$scope.volume = market.volume; // total trade volume of day in BTC
-					$scope.currency_volume = market.currency_volume; // total trade volume of day in currency
-					$scope.close = market.close; // latest trade
-					// previous_close doesn't ever seem to get populated
-					$scope.previous_close = market.previous_close; // latest trade of previous day
+                    settingsService.setCurrency(market.currency);
+                    $scope.currency = settingsService.getCurrency();
 
-					bitcoinchartsAPIService.getWeightedPrices([$scope.currency]).success(function (response) {
-						if (response && response[$scope.currency]) {
-							$scope.avg24h = response[$scope.currency]['24h'];
+                    settingsService.setNumValue('latest_trade', Number(market.latest_trade) * 1000); // unix time of latest trade
+                    $scope.latest_trade = settingsService.getNumValue('latest_trade');
+
+                    settingsService.setNumValue('low', market.low); // lowest trade during day
+                    $scope.low = settingsService.getNumValue('low');
+
+                    settingsService.setNumValue('high', market.high); // highest trade during day
+                    $scope.high = settingsService.getNumValue('high');
+
+                    settingsService.setNumValue('volume', market.volume);
+                    $scope.volume = settingsService.getNumValue('volume');
+
+                    settingsService.setNumValue('currency_volume', market.currency_volume); // total trade volume of day in currency
+                    $scope.currency_volume = settingsService.getNumValue('currency_volume');
+
+                    settingsService.setNumValue('close', market.close); // latest trade
+                    $scope.close = settingsService.getNumValue('close');
+
+					// previous_close doesn't ever seem to get populated
+                    settingsService.setNumValue('previous_close', market.previous_close); // latest trade of previous day
+                    $scope.previous_close = settingsService.getNumValue('previous_close');
+
+                    bitcoinchartsAPIService.getWeightedPrices([$scope.currency]).success(function (response) {
+                        if (response && response[$scope.currency]) {
+                            settingsService.setNumValue('avg24h', response[$scope.currency]['24h']);
+                            $scope.avg24h = settingsService.getNumValue('avg24h');
 						}
 						else {
 							$log.warn('Warning: No weighted prices data returned from bitcoinchartsAPIService.getWeightedPrices(' + $scope.currency + ')', response);	
@@ -71,8 +87,8 @@ angular.module('app.controllers', []).
 		customService.trackPage('/home');
     }).
 	controller('weightedController', function($scope, $rootScope, $log, bitcoinchartsAPIService, settingsService, utilService, customService) {
-        $scope.weightedPrices = {};
-        $scope.timestamp = 0;
+        $scope.weightedPrices = settingsService.weightedPrices;
+        $scope.timestamp = settingsService.getNumValue('timestamp');
 		$scope.preferredCurrencyAbbrev = utilService.getCurrencyAbbrev(settingsService.getPreferredMarket());
 
         $scope.currencySymbol = function(currency) {
@@ -86,9 +102,12 @@ angular.module('app.controllers', []).
         $scope.loadData = function() {
             bitcoinchartsAPIService.getWeightedPrices().success(function (response) {
 				if (response && response.timestamp) {
-	                $scope.timestamp = Number(response['timestamp']) * 1000;
-	                $scope.weightedPrices = response;
-					delete $scope.weightedPrices['timestamp'];
+                    settingsService.setNumValue('timestamp', Number(response['timestamp']) * 1000);
+                    $scope.timestamp = settingsService.getNumValue('timestamp');
+
+                    settingsService.weightedPrices = response;
+                    delete settingsService.weightedPrices['timestamp'];
+	                $scope.weightedPrices = settingsService.weightedPrices;
 				}
 				else {
 					$log.warn('Warning: No weighted prices data returned from bitcoinchartsAPIService.getWeightedPrices()', response);
@@ -106,8 +125,8 @@ angular.module('app.controllers', []).
 
 		customService.trackPage('/weighted');
     }).
-    controller('marketsController', function($scope, $rootScope, $log, bitcoinchartsAPIService, utilService, customService) {
-        $scope.markets = [];
+    controller('marketsController', function($scope, $rootScope, $log, bitcoinchartsAPIService, utilService, customService, settingsService) {
+        $scope.markets = settingsService.markets;
 
         $scope.currencySymbol = function(currency) {
             return utilService.currencySymbol(currency);
@@ -120,11 +139,12 @@ angular.module('app.controllers', []).
 		$scope.loadData = function() {
 			bitcoinchartsAPIService.getMarkets().success(function (response) {
 				if (response && response.length > 0) {
-					//console.log('marketsController.markets:', response);
-					$scope.markets = response;
-					$scope.markets.forEach(function(entry) {
+					settingsService.markets = response;
+					settingsService.markets.forEach(function(entry) {
 						entry.latest_trade = Number(entry.latest_trade) * 1000;
 					});
+
+                    $scope.markets = settingsService.markets;
 				}
 				else {
 					$log.warn('Warning: No markets data returned from bitcoinchartsAPIService.getMarkets()', response);
@@ -176,15 +196,18 @@ angular.module('app.controllers', []).
 			$log.info('Set preferred market to', settingsService.getPreferredMarket());
 		});
 
-		$scope.symbols = new Array(); // list of all available market symbols
+		$scope.symbols = settingsService.symbols;
 
 		$scope.loadData = function() {
 			bitcoinchartsAPIService.getMarkets().success(function (response) {
 				if (response && response.length > 0) {
+                    settingsService.symbols = new Array();
 					response.forEach(function(entry) {
-						$scope.symbols.push(entry.symbol);
+                        settingsService.symbols.push(entry.symbol);
 					});
-					$scope.symbols.sort();
+					settingsService.symbols.sort();
+
+                    $scope.symbols = settingsService.symbols;
 				}
 				else {
 					$log.warn('Warning: No markets data returned from bitcoinchartsAPIService.getMarkets()', response);
