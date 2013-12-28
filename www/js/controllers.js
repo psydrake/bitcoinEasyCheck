@@ -125,8 +125,8 @@ angular.module('app.controllers', []).
 
 		customService.trackPage('/weighted');
     }).
-    controller('marketsController', function($scope, $rootScope, $log, bitcoinchartsAPIService, utilService, customService) {
-        $scope.markets = [];
+    controller('marketsController', function($scope, $rootScope, $log, bitcoinchartsAPIService, utilService, customService, settingsService) {
+        $scope.markets = settingsService.markets;
 
         $scope.currencySymbol = function(currency) {
             return utilService.currencySymbol(currency);
@@ -139,11 +139,12 @@ angular.module('app.controllers', []).
 		$scope.loadData = function() {
 			bitcoinchartsAPIService.getMarkets().success(function (response) {
 				if (response && response.length > 0) {
-					//console.log('marketsController.markets:', response);
-					$scope.markets = response;
-					$scope.markets.forEach(function(entry) {
+					settingsService.markets = response;
+					settingsService.markets.forEach(function(entry) {
 						entry.latest_trade = Number(entry.latest_trade) * 1000;
 					});
+
+                    $scope.markets = settingsService.markets;
 				}
 				else {
 					$log.warn('Warning: No markets data returned from bitcoinchartsAPIService.getMarkets()', response);
@@ -195,15 +196,18 @@ angular.module('app.controllers', []).
 			$log.info('Set preferred market to', settingsService.getPreferredMarket());
 		});
 
-		$scope.symbols = new Array(); // list of all available market symbols
+		$scope.symbols = settingsService.symbols;
 
 		$scope.loadData = function() {
 			bitcoinchartsAPIService.getMarkets().success(function (response) {
 				if (response && response.length > 0) {
+                    settingsService.symbols = new Array();
 					response.forEach(function(entry) {
-						$scope.symbols.push(entry.symbol);
+                        settingsService.symbols.push(entry.symbol);
 					});
-					$scope.symbols.sort();
+					settingsService.symbols.sort();
+
+                    $scope.symbols = settingsService.symbols;
 				}
 				else {
 					$log.warn('Warning: No markets data returned from bitcoinchartsAPIService.getMarkets()', response);

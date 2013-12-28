@@ -185,7 +185,11 @@ angular.module('app.services', []).
                 }
             },
 
-            weightedPrices: {}
+            weightedPrices: {},
+
+            markets: [],
+
+            symbols: new Array() // list of all available market symbols
         }
     }).
     factory('bitcoinchartsAPIService', function($http, utilService) {
