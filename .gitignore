@@ -19,3 +19,4 @@ platforms/ios/Bitcoin\ Easy\ Check.xcodeproj/project.pbxproj/
 console.log
 chrome/app.zip
 chrome/www/*
+firefoxos/www/*
