@@ -229,6 +229,9 @@
     <Error Condition="Exists('packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" HelpKeyword="BCLBUILD2002" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." />
   </Target>
   <ItemGroup>
+    <Content Include="tileLarge.png" />
+    <Content Include="tileMedium.png" />
+    <Content Include="tileSmall.png" />
     <Content Include="www\config.xml" />
   </ItemGroup>
   <ItemGroup>
