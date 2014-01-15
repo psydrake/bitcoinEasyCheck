@@ -199,10 +199,16 @@
         </PostBuildEvent>
     </PropertyGroup>
     <ItemGroup>
+        <Compile Include="Plugins\org.apache.cordova.inappbrowser\InAppBrowser.cs" />
+    </ItemGroup>
+    <ItemGroup>
         <Content Include="www\config.xml" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\cordova.js" />
+    </ItemGroup>
+    <ItemGroup>
+        <Content Include="www\cordova_plugins.js" />
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\css\app.css" />
@@ -1195,9 +1201,6 @@
         <Content Include="www\partials\weighted.html" />
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="Plugins\org.apache.cordova.inappbrowser\InAppBrowser.cs" />
-    </ItemGroup>
-    <ItemGroup>
         <Content Include="www\plugins\com.danielcwilson.plugins.googleanalytics\www\analytics.js" />
     </ItemGroup>
     <ItemGroup>
@@ -1205,8 +1208,5 @@
     </ItemGroup>
     <ItemGroup>
         <Content Include="www\plugins\org.apache.cordova.inappbrowser\www\InAppBrowser.js" />
-    </ItemGroup>
-    <ItemGroup>
-        <Content Include="www\cordova_plugins.js" />
     </ItemGroup>
 </Project>

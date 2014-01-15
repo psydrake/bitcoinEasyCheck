@@ -1,15 +1,23 @@
-'use strict';
-
 // platform-specific service
 angular.module('app.customService', []).
-    factory('customService', function() {
+    factory('customService', function($timeout) {
         return {
+			openLink: function(link) {
+				// Use in-app browser for WP8
+				if (link && link.match(/^mailto:/)) {
+					window.open(encodeURI(link)); 
+				}
+				else {
+					window.open(encodeURI(link), '_blank', 'location=yes'); 
+				}
+			},
+
 			trackPage: function(page) {
-				// place platform-specific google analytics tracking code here
+			    // NOOP - google analytics handled by SDK and EasyTracker
 			},
 
 			doCustomActions: function() {
-				// place platform-specific custom actions here
+				// NOOP - admob handled in MainPage.xaml and MainPage.xaml.cs
 			}
 		}
 	});
