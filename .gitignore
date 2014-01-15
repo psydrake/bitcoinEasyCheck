@@ -20,3 +20,8 @@ console.log
 chrome/app.zip
 chrome/www/*
 firefoxos/www/*
+obj/
+**/Bin/Debug/*
+*.suo
+*.user
+Thumbs.db
