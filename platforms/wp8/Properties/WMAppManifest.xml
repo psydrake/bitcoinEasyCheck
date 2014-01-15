@@ -4,7 +4,7 @@
     <Languages xmlns="">
         <Language code="en-US" />
     </Languages>
-    <App Author="Bitcoin Easy Check author" BitsPerPixel="32" Description="Apache Cordova for Windows Phone" Genre="apps.normal" ProductID="{7FE6AE4D-3D66-4DAF-ADFA-84809BD626F2}" Publisher="Bitcoin Easy Check" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="Bitcoin Easy Check" Version="1.5" xmlns="">
+    <App Author="Drake Emko" BitsPerPixel="32" Description="Check the market price of bitcoin. Easy." Genre="apps.normal" ProductID="{7FE6AE4D-3D66-4DAF-ADFA-84809BD626F2}" Publisher="Bitcoin Easy Check" PublisherID="{db093ed5-53b1-45f7-af72-751e8f36ab80}" RuntimeType="Silverlight" Title="Bitcoin Easy Check" Version="1.5" xmlns="">
         <IconPath IsRelative="true" IsResource="false">ApplicationIcon.png</IconPath>
         <Capabilities>
             <Capability Name="ID_CAP_WEBBROWSERCOMPONENT" />
