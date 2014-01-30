@@ -11,13 +11,9 @@ VERSION=1.5
 VERSION_CODE=7
 
 perl -pi -e "s/\sversion=\"\d+\.\d+\"\s/\ version=\"${VERSION}\"\ /" www/config.xml
-
 perl -pi -e "s/return\s\'\d+\.\d+\.\d+\'\;/return\ \'${VERSION}\.${VERSION_CODE}\'\;/" www/js/services.js 
-
 perl -pi -e "s/android\:versionCode=\"\d+\"/android\:versionCode=\"${VERSION_CODE}\"/" platforms/android/AndroidManifest.xml
-
 perl -pi -e "s/\"version\"\:\ \"\d+\.\d+\.\d+\"/\"version\"\:\ \"${VERSION}\.${VERSION_CODE}\"/" chrome/app/manifest.json
-
 perl -pi -e "s/\"version\"\:\ \"\d+\.\d+\.\d+\"/\"version\"\:\ \"${VERSION}\.${VERSION_CODE}\"/" firefoxos/merges/manifest.webapp
-
 perl -pi -e "s/\<appVersion\>\d+\.\d+\.\d+\<\/appVersion\>/\<appVersion\>${VERSION}\.${VERSION_CODE}\<\/appVersion\>/" platforms/wp8/analytics.xml
+perl -pi -e "s/\sVersion\=\"\d+\.\d+\"/ Version=\"${VERSION}\"/" platforms/wp8/Properties/WMAppManifest.xml
