@@ -37,7 +37,7 @@ import java.util.TimerTask;
 
 public class bitcoinEasyCheck extends CordovaActivity {
 
-	private final static String ADMOB_AD_UNIT = "ca-app-pub-8928397865273246/3976829810";
+	private final static String ADMOB_AD_UNIT = "ca-app-pub-xxxxxxxxxxxxxxxx/xxxxxxxxxx";
 	private AdView adView;
 
 	Timer timer;
@@ -50,6 +50,7 @@ public class bitcoinEasyCheck extends CordovaActivity {
         super.loadUrl(Config.getStartUrl());
         //super.loadUrl("file:///android_asset/www/index.html")
 
+		/* Not showing Android ads for BB10
         // Google AdMob
 		AdView adView = new AdView(this, AdSize.BANNER, ADMOB_AD_UNIT); 
         LinearLayout layout = super.root;
@@ -57,6 +58,7 @@ public class bitcoinEasyCheck extends CordovaActivity {
 
         timer = new Timer(); // Delay the launch of ads; otherwise we get a seg fault
         timer.schedule(new AdMobTask(adView), 5*1000); // delay 5 seconds
+		*/
     }
 
     class AdMobTask extends TimerTask {
