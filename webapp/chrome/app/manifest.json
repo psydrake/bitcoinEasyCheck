@@ -1,7 +1,7 @@
 {
   "name": "Bitcoin Easy Check",
   "description": "Check the market price of Bitcoin. Simple and easy. Backend caches data from the bitcoincharts.com API.",
-  "version": "1.5.7",
+  "version": "1.6.8",
   "manifest_version": 2,
   "icons": { "16": "bitcoin_easy_check_16x16.png", "128": "bitcoin_easy_check_128x128.png" },
   "app": {

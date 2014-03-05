@@ -128,7 +128,7 @@ angular.module('app.services', []).
 			},
 
 			getAppVersion: function() {
-				return '1.5.7'; // version
+				return '1.6.8'; // version
 			}
         }
     }).
