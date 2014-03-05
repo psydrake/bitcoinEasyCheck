@@ -141,7 +141,7 @@ angular.module('app.services', []).
 			},
 
 			getPreferredMarket: function() {
-				var preferredMarket = 'mtgoxUSD';
+				var preferredMarket = 'bitstampUSD';
 				if (this.store && this.store.get('preferredMarket')) {
 					preferredMarket = this.store.get('preferredMarket');
 				}
