@@ -128,7 +128,7 @@ angular.module('app.services', []).
 			},
 
 			getAppVersion: function() {
-				return '1.5.7'; // version
+				return '1.6.8'; // version
 			}
         }
     }).
@@ -141,7 +141,7 @@ angular.module('app.services', []).
 			},
 
 			getPreferredMarket: function() {
-				var preferredMarket = 'mtgoxUSD';
+				var preferredMarket = 'bitstampUSD';
 				if (this.store && this.store.get('preferredMarket')) {
 					preferredMarket = this.store.get('preferredMarket');
 				}
