@@ -5,10 +5,10 @@
 # 2. run this script: ./setVersion.sh
 
 # Universal version - in Android, this is versionName
-VERSION=1.6
+VERSION=1.7
 
 # Only used in Android. Appended as minor version number if avaliable
-VERSION_CODE=8
+VERSION_CODE=9
 
 perl -pi -e "s/\sversion=\"\d+\.\d+\"\s/\ version=\"${VERSION}\"\ /" www/config.xml
 perl -pi -e "s/return\s\'\d+\.\d+\.\d+\'\;/return\ \'${VERSION}\.${VERSION_CODE}\'\;/" www/js/services.js 
