@@ -7,9 +7,7 @@ var app = angular.module('app', [
         'app.customService',
         'ngRoute',
 		'ngTouch',
-		//'ngCookies',
         'ui.bootstrap'
-		//'mgcrea.pullToRefresh'
     ]).
 	config(['$routeProvider', function($routeProvider) {
 		$routeProvider.
