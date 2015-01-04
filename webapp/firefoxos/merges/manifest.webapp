@@ -1,5 +1,5 @@
 {
-  "version": "1.8.11",
+  "version": "1.9.12",
   "name": "Bitcoin Easy Check",
   "description": "Check the market price of Bitcoin. Simple and easy. Backend caches data from the bitcoincharts.com API.",
   "launch_path": "/main.html",
