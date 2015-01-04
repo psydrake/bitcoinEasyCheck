@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		02CBA9A2ED114C74BFB8F522 /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 73E8EBEBAB254153B8780646 /* CDVInAppBrowser.m */; };
 		033F648105FD44219FFDED56 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6FF6654B53B54602986A9F8A /* AudioToolbox.framework */; };
